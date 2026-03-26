@@ -1,5 +1,6 @@
 package main.java.logic;
 
+import main.java.io.Accessor;
 import main.java.ui.SlideViewerComponent;
 
 import java.util.ArrayList;
@@ -19,17 +20,16 @@ import java.util.ArrayList;
 
 public class Presentation {
 	private String showTitle; // title of the presentation
-	private ArrayList<Slide> showList = null; // an ArrayList with Slides
 	private int currentSlideNumber = 0; // the slidenummer of the current main.java.logic.Slide
-	private SlideViewerComponent slideViewComponent = null; // the viewcomponent of the Slides
+	private ArrayList<Slide> showList = null; // an ArrayList with Slides
+	private ArrayList<PresentationObserver> observers;
+	private Accessor accessor;
 
 	public Presentation() {
-		slideViewComponent = null;
 		clear();
 	}
 
 	public Presentation(SlideViewerComponent slideViewerComponent) {
-		this.slideViewComponent = slideViewerComponent;
 		clear();
 	}
 
@@ -46,7 +46,7 @@ public class Presentation {
 	}
 
 	public void setShowView(SlideViewerComponent slideViewerComponent) {
-		this.slideViewComponent = slideViewerComponent;
+
 	}
 
 	// give the number of the current slide
@@ -57,9 +57,6 @@ public class Presentation {
 	// change the current slide number and signal it to the window
 	public void setSlideNumber(int number) {
 		currentSlideNumber = number;
-		if (slideViewComponent != null) {
-			slideViewComponent.update(this, getCurrentSlide());
-		}
 	}
 
 	// go to the previous slide unless your at the beginning of the presentation
@@ -102,5 +99,25 @@ public class Presentation {
 
 	public void exit(int n) {
 		System.exit(n);
+	}
+
+	public void addObserver(PresentationObserver observer)
+	{
+
+	}
+
+	public void removeObserver(PresentationObserver observer)
+	{
+
+	}
+
+	public void notifyObserver()
+	{
+
+	}
+
+	public void update(Presentation presentation)
+	{
+
 	}
 }
