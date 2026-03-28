@@ -1,12 +1,19 @@
 package main.java.ui;
 
+import main.java.controller.command.Command;
+import main.java.controller.command.ExitCommand;
+import main.java.controller.command.NextSlideCommand;
+import main.java.controller.command.PreviousSlideCommand;
 import main.java.logic.Presentation;
 import main.java.controller.KeyController;
 import main.java.controller.MenuController;
 
 import java.awt.Dimension;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowAdapter;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JFrame;
 
 /**
@@ -44,7 +51,18 @@ public class SlideViewerFrame extends JFrame {
 				}
 			});
 		getContentPane().add(slideViewerComponent);
-		addKeyListener(new KeyController(presentation)); // add a controller
+
+		Map<Integer, Command> commandMap = new HashMap<>();
+		commandMap.put(KeyEvent.VK_PAGE_DOWN, new NextSlideCommand(presentation));
+		commandMap.put(KeyEvent.VK_DOWN, new NextSlideCommand(presentation));
+		commandMap.put(KeyEvent.VK_ENTER, new NextSlideCommand(presentation));
+
+		commandMap.put(KeyEvent.VK_PAGE_UP, new PreviousSlideCommand(presentation));
+		commandMap.put(KeyEvent.VK_UP, new PreviousSlideCommand(presentation));
+
+		commandMap.put(KeyEvent.VK_Q, new ExitCommand(presentation));
+
+		addKeyListener(new KeyController(commandMap)); // add a controller
 		setMenuBar(new MenuController(this, presentation));	// add another controller
 		setSize(new Dimension(WIDTH, HEIGHT)); // Same sizes as main.java.logic.Slide has.
 		setVisible(true);

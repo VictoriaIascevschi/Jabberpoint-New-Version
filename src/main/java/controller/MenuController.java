@@ -1,7 +1,8 @@
 package main.java.controller;
 
-import main.java.ui.AboutBox;
+import main.java.controller.command.Command;
 import main.java.logic.Presentation;
+import main.java.ui.AboutBox;
 import main.java.io.Accessor;
 import main.java.io.XMLAccessor;
 
@@ -28,7 +29,8 @@ import javax.swing.JOptionPane;
 public class MenuController extends MenuBar {
 	
 	private Frame parent; // the frame, only used as parent for the Dialogs
-	private Presentation presentation; // Commands are given to the presentation
+	private Command command;
+	private Presentation presentation; // Delete after testing
 	
 	private static final long serialVersionUID = 227L;
 	
@@ -52,19 +54,30 @@ public class MenuController extends MenuBar {
 	protected static final String LOADERR = "Load Error";
 	protected static final String SAVEERR = "Save Error";
 
+	/*
+	Implementing the command pattern disconnects the MenuController
+	from the Presentation class, therefore it cannot be passed as a parameter
+	anymore. Should the 'command' interface be passed as a parameter instead,
+	or any of the classes implementing the interface?
+
+	Wouldn't adding all commands as parameters violate the Open/Closed principle?
+	*/
+
+	// could use an enumerable and make use of a list
 	public MenuController(Frame frame, Presentation pres) {
 		parent = frame;
 		presentation = pres;
 		MenuItem menuItem;
 		Menu fileMenu = new Menu(FILE);
+
 		fileMenu.add(menuItem = mkMenuItem(OPEN));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
-				presentation.clear();
+				presentation.clear(); // a new command can be instantiated here
 				Accessor xmlAccessor = new XMLAccessor();
 				try {
 					xmlAccessor.loadFile(presentation, TESTFILE);
-					presentation.setSlideNumber(0);
+					presentation.setSlideNumber(0); // can also create a new command
 				} catch (IOException exc) {
 					JOptionPane.showMessageDialog(parent, IOEX + exc, 
          			LOADERR, JOptionPane.ERROR_MESSAGE);
@@ -131,8 +144,13 @@ public class MenuController extends MenuBar {
 		setHelpMenu(helpMenu);		// needed for portability (Motif, etc.).
 	}
 
-// create a menu item
+	// create a menu item
 	public MenuItem mkMenuItem(String name) {
 		return new MenuItem(name, new MenuShortcut(name.charAt(0)));
+	}
+
+	// execute a command
+	public void executeCommand() {
+
 	}
 }
