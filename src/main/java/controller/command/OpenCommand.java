@@ -8,11 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
-import static main.java.controller.MenuController.LOADERR;
-
 public class OpenCommand implements Command {
     protected static final String LOADERR = "Load Error";
-    protected static final String TESTFILE = "test.xml";
 
     private Presentation presentation;
     private Frame parent;
@@ -32,9 +29,10 @@ public class OpenCommand implements Command {
             xmlAccessor.loadFile(presentation, fileName);
             presentation.setSlideNumber(0);
         } catch (IOException exc) {
-            JOptionPane.showMessageDialog(parent, IOEX + exc,
+            JOptionPane.showMessageDialog(parent, "IO Exception" + exc,
                     LOADERR, JOptionPane.ERROR_MESSAGE);
         }
+
         parent.repaint();
     }
 }
