@@ -2,5 +2,5 @@ package main.java.logic;
 
 public interface PresentationObserver
 {
-    public void update(Presentation presentation, Slide data);
+    public void update(Slide data);
 }
