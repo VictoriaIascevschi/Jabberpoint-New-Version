@@ -10,6 +10,7 @@ on:
       - main
 
 jobs:
+
   build:
     runs-on: ubuntu-latest
 
@@ -61,14 +62,14 @@ jobs:
 
     steps:
       - name: Deploy to Acceptance
-        run: "Deploying ${{ needs.build.outputs.image_tag }} to ACCEPTANCE"
+        run: echo "Deploying ${{ needs.build.outputs.image_tag }} to ACCEPTANCE"
 
   deploy-production:
     if: github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
     environment:
-    name: production
+      name: production
 
     steps:
       - name: Deploy to Production
