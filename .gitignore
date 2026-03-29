@@ -1,0 +1,12 @@
+# Maven build output
+/target/
+
+# IntelliJ IDEA build output
+/out/
+
+# IntelliJ project metadata
+*.iml
+.idea/
+
+# macOS
+.DS_Store

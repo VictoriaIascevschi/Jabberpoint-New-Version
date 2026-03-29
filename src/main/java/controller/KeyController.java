@@ -1,5 +1,5 @@
 package main.java.controller;
-import main.java.logic.Presentation;
+import main.java.businesslogic.Presentation;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;

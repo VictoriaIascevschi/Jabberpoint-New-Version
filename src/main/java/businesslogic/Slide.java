@@ -1,4 +1,4 @@
-package main.java.logic;
+package main.java.businesslogic;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
@@ -41,8 +41,9 @@ public class Slide {
 	}
 
 	// Create main.java.logic.TextItem of String, and add the main.java.logic.TextItem
-	public void append(int level, String message) {
-		append(new TextItem(level, message));
+	public void append(String type, int level, String content) {
+		SlideItemFactory factory = new SlideItemFactory();
+		append(factory.createSlideItem(type, level, content));
 	}
 
 	// give the  main.java.logic.SlideItem

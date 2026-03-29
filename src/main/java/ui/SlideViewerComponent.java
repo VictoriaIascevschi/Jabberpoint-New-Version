@@ -1,7 +1,7 @@
 package main.java.ui;
 
-import main.java.logic.Slide;
-import main.java.logic.Presentation;
+import main.java.businesslogic.Slide;
+import main.java.businesslogic.Presentation;
 
 import java.awt.Color;
 import java.awt.Font;

@@ -1,8 +1,8 @@
 package main.java.io;
 
-import main.java.logic.BitmapItem;
-import main.java.logic.Presentation;
-import main.java.logic.Slide;
+import main.java.businesslogic.Presentation;
+import main.java.businesslogic.Slide;
+import main.java.businesslogic.SlideItemFactory;
 
 /** A built in demo-presentation
  * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman
@@ -50,7 +50,11 @@ class DemoPresentation extends Accessor {
 		slide.append(2, "use File->Open from the menu.");
 		slide.append(1, " ");
 		slide.append(1, "This is the end of the presentation.");
-		slide.append(new BitmapItem(1, "main.java.app.JabberPoint.jpg"));
+		SlideItemFactory factory = new SlideItemFactory();
+
+		slide.append(factory.createSlideItem("image", 1, "main.java.app.JabberPoint.jpg"));
+		slide.append(factory.createSlideItem("text", 1, "Some text"));
+
 		presentation.append(slide);
 	}
 
