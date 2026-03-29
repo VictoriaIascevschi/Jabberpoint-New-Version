@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE presentation SYSTEM "jabberpoint.dtd">
 <presentation>
-<showtitle>XML-Based main.java.logic.Presentation for Jabberpoint</showtitle>
+<showtitle>XML-Based main.java.businesslogic.Presentation for Jabberpoint</showtitle>
 <slide>
 <title>main.java.app.JabberPoint XML-Demo</title>
 <item kind="text" level="1">Welkom to Jabberpoint</item>

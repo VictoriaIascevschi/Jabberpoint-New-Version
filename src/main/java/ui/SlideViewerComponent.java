@@ -41,8 +41,10 @@ public class SlideViewerComponent extends JComponent implements PresentationObse
 
 	public SlideViewerComponent(Presentation presentation, JFrame frame)
 	{
+		setBackground(BGCOLOR);
 		this.presentation = presentation;
         this.slide = presentation.getCurrentSlide();
+		labelFont = new Font(FONTNAME, FONTSTYLE, FONTHEIGHT);
 		this.frame = frame;
 	}
 
@@ -59,7 +61,7 @@ public class SlideViewerComponent extends JComponent implements PresentationObse
 		}
 		g.setFont(labelFont);
 		g.setColor(COLOR);
-		g.drawString("main.java.logic.Slide " + (1 + presentation.getSlideNumber()) + " of " +
+		g.drawString("Slide " + (1 + presentation.getSlideNumber()) + " of " +
 				presentation.getSize(), XPOS, YPOS);
 		Rectangle area = new Rectangle(0, YPOS, getWidth(), (getHeight() - YPOS));
 		slide.draw(g, area, this);
