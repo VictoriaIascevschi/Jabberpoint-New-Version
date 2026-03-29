@@ -2,7 +2,7 @@ package main.java.controller.command;
 
 import main.java.io.Accessor;
 import main.java.io.XMLAccessor;
-import main.java.logic.Presentation;
+import main.java.businesslogic.Presentation;
 
 import javax.swing.*;
 import java.awt.*;

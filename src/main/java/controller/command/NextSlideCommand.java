@@ -1,6 +1,6 @@
 package main.java.controller.command;
 
-import main.java.logic.Presentation;
+import main.java.businesslogic.Presentation;
 
 public class NextSlideCommand implements Command {
     private Presentation presentation;

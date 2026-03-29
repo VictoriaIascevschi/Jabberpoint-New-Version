@@ -2,7 +2,7 @@
 <!DOCTYPE presentation SYSTEM
         "D:\Year 2\Period 3\Software Quality\Jabberpoint-New-Version\src\main\resources\jabberpoint.dtd">
 <presentation>
-	<showtitle>XML-Based main.java.logic.Presentation for Jabberpoint</showtitle>w
+	<showtitle>XML-Based main.java.businesslogic.Presentation for Jabberpoint</showtitle>
 	<slide>
 		<title>main.java.app.JabberPoint XML-Demo</title>
 		<item kind="text"  level="1">Welkom to Jabberpoint</item>

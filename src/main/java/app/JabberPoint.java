@@ -1,7 +1,7 @@
 package main.java.app;
 
-import main.java.logic.Style;
-import main.java.logic.Presentation;
+import main.java.businesslogic.Style;
+import main.java.businesslogic.Presentation;
 import main.java.ui.SlideViewerFrame;
 import main.java.io.Accessor;
 import main.java.io.XMLAccessor;

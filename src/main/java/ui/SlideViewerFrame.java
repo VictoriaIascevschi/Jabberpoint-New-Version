@@ -1,7 +1,7 @@
 package main.java.ui;
 
 import main.java.controller.command.*;
-import main.java.logic.Presentation;
+import main.java.businesslogic.Presentation;
 import main.java.controller.KeyController;
 import main.java.controller.MenuController;
 

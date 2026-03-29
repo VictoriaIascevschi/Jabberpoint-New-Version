@@ -10,7 +10,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import main.java.logic.*;
+import main.java.businesslogic.*;
 import org.xml.sax.SAXException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -47,8 +47,9 @@ public class XMLAccessor extends Accessor {
     protected static final String PCE = "Parser Configuration Exception";
     protected static final String UNKNOWNTYPE = "Unknown Element type";
     protected static final String NFE = "Number Format Exception";
-    
-    
+
+	private final SlideItemFactory slideItemFactory = new SlideItemFactory();
+
     private String getTitle(Element element, String tagName) {
     	NodeList titles = element.getElementsByTagName(tagName);
     	return titles.item(0).getTextContent();
@@ -93,27 +94,26 @@ public class XMLAccessor extends Accessor {
 	protected void loadSlideItem(Slide slide, Element item) {
 		int level = 1; // default
 		NamedNodeMap attributes = item.getAttributes();
+
 		String leveltext = attributes.getNamedItem(LEVEL).getTextContent();
 		if (leveltext != null) {
 			try {
 				level = Integer.parseInt(leveltext);
-			}
-			catch(NumberFormatException x) {
+			} catch (NumberFormatException x) {
 				System.err.println(NFE);
 			}
 		}
+
 		String type = attributes.getNamedItem(KIND).getTextContent();
-		if (TEXT.equals(type)) {
-			slide.append(new TextItem(level, item.getTextContent()));
+		String content = item.getTextContent();
+
+		if (!TEXT.equalsIgnoreCase(type) && !IMAGE.equalsIgnoreCase(type)) {
+			System.err.println(UNKNOWNTYPE);
+			return;
 		}
-		else {
-			if (IMAGE.equals(type)) {
-				slide.append(new BitmapItem(level, item.getTextContent()));
-			}
-			else {
-				System.err.println(UNKNOWNTYPE);
-			}
-		}
+
+		SlideItem slideItem = slideItemFactory.createSlideItem(type, level, content);
+		slide.append(slideItem);
 	}
 
 	public void saveFile(Presentation presentation, String filename) throws IOException {
