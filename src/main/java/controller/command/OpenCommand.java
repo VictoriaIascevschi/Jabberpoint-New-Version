@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
-import static main.java.controller.command.MenuConstants.*;
+import static main.java.controller.MenuConstants.*;
 
 public class OpenCommand implements Command {
     private Presentation presentation;

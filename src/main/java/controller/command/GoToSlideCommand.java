@@ -5,7 +5,7 @@ import main.java.logic.Presentation;
 import javax.swing.*;
 import java.awt.*;
 
-import static main.java.controller.command.MenuConstants.PAGENR;
+import static main.java.controller.MenuConstants.PAGENR;
 
 public class GoToSlideCommand implements Command {
     private Presentation presentation;

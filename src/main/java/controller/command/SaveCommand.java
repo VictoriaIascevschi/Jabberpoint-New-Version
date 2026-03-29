@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
-import static main.java.controller.command.MenuConstants.*;
+import static main.java.controller.MenuConstants.*;
 
 public class SaveCommand implements Command {
     private Presentation presentation;
@@ -23,7 +23,7 @@ public class SaveCommand implements Command {
     public void execute() {
         Accessor xmlAccessor = new XMLAccessor();
         try {
-            xmlAccessor.saveFile(presentation, FILE);
+            xmlAccessor.saveFile(presentation, SAVEFILE);
         } catch (IOException exc) {
             JOptionPane.showMessageDialog(parent, IOEX + exc,
                     SAVEERR, JOptionPane.ERROR_MESSAGE);

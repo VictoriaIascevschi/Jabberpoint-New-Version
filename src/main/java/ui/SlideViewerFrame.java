@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JFrame;
 
+import static main.java.controller.MenuConstants.*;
+
 /**
  * <p>The application window for a slideviewcomponent</p>
  * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman
@@ -65,14 +67,14 @@ public class SlideViewerFrame extends JFrame {
 
 		// Adding all menu commands to a map, linking each menu item to a certain command
 		Map<String, Command> menuCommandMap = new HashMap<>();
-		menuCommandMap.put("OPEN", new OpenCommand(presentation, this));
-		menuCommandMap.put("NEW", new NewPresentationCommand(presentation, this));
-		menuCommandMap.put("SAVE", new SaveCommand(presentation, this));
-		menuCommandMap.put("EXIT", new ExitCommand(presentation));
-		menuCommandMap.put("NEXT", new NextSlideCommand(presentation));
-		menuCommandMap.put("PREV", new PreviousSlideCommand(presentation));
-		menuCommandMap.put("GOTO", new GoToSlideCommand(presentation, this));
-		menuCommandMap.put("ABOUT", new AboutBoxCommand(this));
+		menuCommandMap.put(OPEN, new OpenCommand(presentation, this));
+		menuCommandMap.put(NEW, new NewPresentationCommand(presentation, this));
+		menuCommandMap.put(SAVE, new SaveCommand(presentation, this));
+		menuCommandMap.put(EXIT, new ExitCommand(presentation));
+		menuCommandMap.put(NEXT, new NextSlideCommand(presentation));
+		menuCommandMap.put(PREV, new PreviousSlideCommand(presentation));
+		menuCommandMap.put(GOTO, new GoToSlideCommand(presentation, this));
+		menuCommandMap.put(ABOUT, new AboutBoxCommand(this));
 
 		setMenuBar(new MenuController(this, menuCommandMap));	// adding the MENU CONTROLLER to the menu bar
 		setSize(new Dimension(WIDTH, HEIGHT)); // Same sizes as main.java.logic.Slide has.

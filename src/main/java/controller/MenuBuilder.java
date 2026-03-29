@@ -1,9 +1,11 @@
-package main.java.controller.command;
+package main.java.controller;
+
+import main.java.controller.command.Command;
 
 import java.awt.*;
 import java.util.Map;
 
-import static main.java.controller.command.MenuConstants.*;
+import static main.java.controller.MenuConstants.*;
 
 public class MenuBuilder {
     private Frame parent;
@@ -17,11 +19,11 @@ public class MenuBuilder {
     public Menu buildFileMenu() {
         Menu fileMenu = new Menu(FILE);
 
-        fileMenu.add(createMenuItem("Open", commandMap.get("OPEN")));
-        fileMenu.add(createMenuItem("New", commandMap.get("NEW")));
-        fileMenu.add(createMenuItem("Save", commandMap.get("SAVE")));
+        fileMenu.add(createMenuItem("Open", commandMap.get(OPEN)));
+        fileMenu.add(createMenuItem("New", commandMap.get(NEW)));
+        fileMenu.add(createMenuItem("Save", commandMap.get(SAVE)));
         fileMenu.addSeparator();
-        fileMenu.add(createMenuItem("Exit", commandMap.get("EXIT")));
+        fileMenu.add(createMenuItem("Exit", commandMap.get(EXIT)));
 
         return fileMenu;
     }
@@ -29,9 +31,9 @@ public class MenuBuilder {
     public Menu buildViewMenu() {
         Menu viewMenu = new Menu(VIEW);
 
-        viewMenu.add(createMenuItem("Next", commandMap.get("NEXT")));
-        viewMenu.add(createMenuItem("Previous", commandMap.get("PREV")));
-        viewMenu.add(createMenuItem("Go to", commandMap.get("GOTO")));
+        viewMenu.add(createMenuItem("Next", commandMap.get(NEXT)));
+        viewMenu.add(createMenuItem("Previous", commandMap.get(PREV)));
+        viewMenu.add(createMenuItem("Go to", commandMap.get(GOTO)));
 
         return viewMenu;
     }
@@ -39,7 +41,7 @@ public class MenuBuilder {
     public Menu buildHelpMenu() {
         Menu helpMenu = new Menu(HELP);
 
-        helpMenu.add(createMenuItem("About", commandMap.get("ABOUT")));
+        helpMenu.add(createMenuItem("About", commandMap.get(ABOUT)));
 
         return helpMenu;
     }

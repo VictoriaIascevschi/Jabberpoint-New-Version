@@ -32,33 +32,4 @@ public class KeyController extends KeyAdapter {
 			command.execute();
 		}
 	}
-
-//	public void keyPressed(KeyEvent keyEvent) {
-//		Command command = commandMap.get(keyEvent.getKeyCode());
-//
-//		switch(keyEvent.getKeyCode()) {
-//			case KeyEvent.VK_PAGE_DOWN:
-//			case KeyEvent.VK_DOWN:
-//			case KeyEvent.VK_ENTER:
-//			case '+':
-//				if (command != null) {
-//					command.execute();
-//				}
-//				break;
-//			case KeyEvent.VK_PAGE_UP:
-//			case KeyEvent.VK_UP:
-//			case '-':
-//				if (command != null) {
-//					command.execute();
-//				}
-//				break;
-//			case 'q':
-//			case 'Q':
-////				this.command = new ExitCommand();
-////				executeCommand();
-//				break; // Probably never reached!!
-//			default:
-//				break;
-//		}
-//	}
 }
