@@ -1,5 +1,6 @@
 package main.java.ui;
 
+import main.java.businesslogic.PresentationObserver;
 import main.java.businesslogic.Slide;
 import main.java.businesslogic.Presentation;
 
@@ -22,27 +23,26 @@ import javax.swing.JFrame;
  * @version 1.6 2014/05/16 Sylvia Stuurman
  */
 
-public class SlideViewerComponent extends JComponent {
-		
+public class SlideViewerComponent extends JComponent implements PresentationObserver
+{
+ 	private Presentation presentation;
 	private Slide slide; // current slide
 	private Font labelFont = null; // font for labels
-	private Presentation presentation = null; // the presentation
-	private JFrame frame = null;
-	
+	private static final Color COLOR = Color.black;
 	private static final long serialVersionUID = 227L;
 	
 	private static final Color BGCOLOR = Color.white;
-	private static final Color COLOR = Color.black;
 	private static final String FONTNAME = "Dialog";
 	private static final int FONTSTYLE = Font.BOLD;
 	private static final int FONTHEIGHT = 10;
 	private static final int XPOS = 1100;
 	private static final int YPOS = 20;
+	private JFrame frame = null;
 
-	public SlideViewerComponent(Presentation pres, JFrame frame) {
-		setBackground(BGCOLOR); 
-		presentation = pres;
-		labelFont = new Font(FONTNAME, FONTSTYLE, FONTHEIGHT);
+	public SlideViewerComponent(Presentation presentation, JFrame frame)
+	{
+		this.presentation = presentation;
+        this.slide = presentation.getCurrentSlide();
 		this.frame = frame;
 	}
 
@@ -50,18 +50,7 @@ public class SlideViewerComponent extends JComponent {
 		return new Dimension(Slide.WIDTH, Slide.HEIGHT);
 	}
 
-	public void update(Presentation presentation, Slide data) {
-		if (data == null) {
-			repaint();
-			return;
-		}
-		this.presentation = presentation;
-		this.slide = data;
-		repaint();
-		frame.setTitle(presentation.getTitle());
-	}
-
-// draw the slide
+	// draw the slide
 	public void paintComponent(Graphics g) {
 		g.setColor(BGCOLOR);
 		g.fillRect(0, 0, getSize().width, getSize().height);
@@ -71,8 +60,19 @@ public class SlideViewerComponent extends JComponent {
 		g.setFont(labelFont);
 		g.setColor(COLOR);
 		g.drawString("main.java.logic.Slide " + (1 + presentation.getSlideNumber()) + " of " +
-                 presentation.getSize(), XPOS, YPOS);
+				presentation.getSize(), XPOS, YPOS);
 		Rectangle area = new Rectangle(0, YPOS, getWidth(), (getHeight() - YPOS));
 		slide.draw(g, area, this);
+	}
+
+	@Override
+	public void update(Presentation presentation, Slide data) {
+		if (data == null) {
+			repaint();
+			return;
+		}
+		this.slide = data;
+		repaint();
+		frame.setTitle(presentation.getTitle());
 	}
 }
