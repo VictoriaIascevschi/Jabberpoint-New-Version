@@ -121,7 +121,7 @@ public class Presentation {
 		Slide data = this.getSlide(this.currentSlideNumber);
 		for(PresentationObserver observer : this.observers)
 		{
-			observer.update(data);
+			observer.update(this, data);
 		}
 	}
 }
