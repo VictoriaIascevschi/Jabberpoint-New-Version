@@ -32,7 +32,6 @@ public class SlideViewerComponent extends JComponent implements PresentationObse
 	private static final long serialVersionUID = 227L;
 	
 	private static final Color BGCOLOR = Color.white;
-	private static final Color COLOR = Color.black;
 	private static final String FONTNAME = "Dialog";
 	private static final int FONTSTYLE = Font.BOLD;
 	private static final int FONTHEIGHT = 10;
