@@ -3,6 +3,7 @@ name: DTAP Pipeline
 on:
   push:
     branches:
+      - develop
       - main
   pull_request:
     branches:
@@ -25,15 +26,15 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Build with Maven
-        run: mvn clean install
+      - name: Build and Test with Maven
+        run: mvn clean verify
 
       - name: Generate image tag
         id: meta
         run: echo "image_tag=${GITHUB_SHA}" >> $GITHUB_OUTPUT
 
   deploy-dev:
-    if: github.event_name == 'push'
+    if: github.ref == 'refs/heads/develop'
     needs: build
     runs-on: ubuntu-latest
     environment: development
@@ -43,28 +44,32 @@ jobs:
         run: echo "Deploying ${{ needs.build.outputs.image_tag }} to DEV"
 
   deploy-test:
+    if: github.ref == 'refs/heads/develop'
     needs: deploy-dev
     runs-on: ubuntu-latest
     environment: test
 
     steps:
       - name: Deploy to Test
-        run: echo "Deploying to TEST"
+        run: echo "Deploying ${{ needs.build.outputs.image_tag }} to TEST"
 
   deploy-acceptance:
+    if: github.ref == 'refs/heads/develop'
     needs: deploy-test
     runs-on: ubuntu-latest
     environment: acceptance
 
     steps:
       - name: Deploy to Acceptance
-        run: echo "Deploying to ACCEPTANCE"
+        run: "Deploying ${{ needs.build.outputs.image_tag }} to ACCEPTANCE"
 
   deploy-production:
-    needs: deploy-acceptance
+    if: github.ref == 'refs/heads/main'
+    needs: build
     runs-on: ubuntu-latest
-    environment: production
+    environment:
+    name: production
 
     steps:
       - name: Deploy to Production
-        run: echo "Deploying to PRODUCTION"
+      - run: echo "Deploying ${{ needs.build.outputs.image_tag }} to PRODUCTION"
