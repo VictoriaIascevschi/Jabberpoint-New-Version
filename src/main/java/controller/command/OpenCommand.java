@@ -8,17 +8,23 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
+import static main.java.controller.command.MenuConstants.*;
+
 public class OpenCommand implements Command {
-    protected static final String LOADERR = "Load Error";
-
     private Presentation presentation;
-    private Frame parent;
-    private String fileName;
+    private Frame parent;;
 
-    public OpenCommand(Presentation presentation, Frame parent, String fileName) {
+    public OpenCommand(Presentation presentation, Frame parent) {
         this.presentation = presentation;
         this.parent = parent;
-        this.fileName = fileName;
+    }
+
+    public Presentation getPresentation() {
+        return this.presentation;
+    }
+
+    public Frame getParent() {
+        return this.parent;
     }
 
     @Override
@@ -26,10 +32,10 @@ public class OpenCommand implements Command {
         presentation.clear();
         Accessor xmlAccessor = new XMLAccessor();
         try {
-            xmlAccessor.loadFile(presentation, fileName);
+            xmlAccessor.loadFile(presentation, FILE);
             presentation.setSlideNumber(0);
         } catch (IOException exc) {
-            JOptionPane.showMessageDialog(parent, "IO Exception" + exc,
+            JOptionPane.showMessageDialog(parent, IOEX + exc,
                     LOADERR, JOptionPane.ERROR_MESSAGE);
         }
 

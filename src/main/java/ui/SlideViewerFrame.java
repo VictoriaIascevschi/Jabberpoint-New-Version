@@ -1,9 +1,6 @@
 package main.java.ui;
 
-import main.java.controller.command.Command;
-import main.java.controller.command.ExitCommand;
-import main.java.controller.command.NextSlideCommand;
-import main.java.controller.command.PreviousSlideCommand;
+import main.java.controller.command.*;
 import main.java.logic.Presentation;
 import main.java.controller.KeyController;
 import main.java.controller.MenuController;
@@ -42,7 +39,7 @@ public class SlideViewerFrame extends JFrame {
 	}
 
 // Setup GUI
-	public void setupWindow(SlideViewerComponent 
+	public void setupWindow(SlideViewerComponent
 			slideViewerComponent, Presentation presentation) {
 		setTitle(JABTITLE);
 		addWindowListener(new WindowAdapter() {
@@ -52,7 +49,9 @@ public class SlideViewerFrame extends JFrame {
 			});
 		getContentPane().add(slideViewerComponent);
 
+		// Adding all key commands to a map, linking each key event to a certain command
 		Map<Integer, Command> commandMap = new HashMap<>();
+
 		commandMap.put(KeyEvent.VK_PAGE_DOWN, new NextSlideCommand(presentation));
 		commandMap.put(KeyEvent.VK_DOWN, new NextSlideCommand(presentation));
 		commandMap.put(KeyEvent.VK_ENTER, new NextSlideCommand(presentation));
@@ -62,8 +61,20 @@ public class SlideViewerFrame extends JFrame {
 
 		commandMap.put(KeyEvent.VK_Q, new ExitCommand(presentation));
 
-		addKeyListener(new KeyController(commandMap)); // add a controller
-		setMenuBar(new MenuController(this, presentation));	// add another controller
+		addKeyListener(new KeyController(commandMap)); // adding the KEY CONTROLLER to the key listener
+
+		// Adding all menu commands to a map, linking each menu item to a certain command
+		Map<String, Command> menuCommandMap = new HashMap<>();
+		menuCommandMap.put("OPEN", new OpenCommand(presentation, this));
+		menuCommandMap.put("NEW", new NewPresentationCommand(presentation, this));
+		menuCommandMap.put("SAVE", new SaveCommand(presentation, this));
+		menuCommandMap.put("EXIT", new ExitCommand(presentation));
+		menuCommandMap.put("NEXT", new NextSlideCommand(presentation));
+		menuCommandMap.put("PREV", new PreviousSlideCommand(presentation));
+		menuCommandMap.put("GOTO", new GoToSlideCommand(presentation, this));
+		menuCommandMap.put("ABOUT", new AboutBoxCommand(this));
+
+		setMenuBar(new MenuController(this, menuCommandMap));	// adding the MENU CONTROLLER to the menu bar
 		setSize(new Dimension(WIDTH, HEIGHT)); // Same sizes as main.java.logic.Slide has.
 		setVisible(true);
 	}

@@ -8,25 +8,25 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
+import static main.java.controller.command.MenuConstants.*;
+
 public class SaveCommand implements Command {
     private Presentation presentation;
     private Frame parent;
-    private String fileName;
 
-    public SaveCommand(Presentation presentation, Frame parent, String filename) {
+    public SaveCommand(Presentation presentation, Frame parent) {
         this.presentation = presentation;
         this.parent = parent;
-        this.fileName = filename;
     }
 
     @Override
     public void execute() {
         Accessor xmlAccessor = new XMLAccessor();
         try {
-            xmlAccessor.saveFile(presentation, fileName);
+            xmlAccessor.saveFile(presentation, FILE);
         } catch (IOException exc) {
-            JOptionPane.showMessageDialog(parent, "IO Exception" + exc,
-                    "Save error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(parent, IOEX + exc,
+                    SAVEERR, JOptionPane.ERROR_MESSAGE);
         }
     }
 }

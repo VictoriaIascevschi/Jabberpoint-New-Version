@@ -20,8 +20,8 @@ import java.util.ArrayList;
 public class Presentation {
 	private String showTitle; // title of the presentation
 	public ArrayList<Slide> showList = null; // an ArrayList with Slides
-	public int currentSlideNumber = 0; // the slidenummer of the current main.java.logic.Slide
-	private SlideViewerComponent slideViewComponent = null; // the viewcomponent of the Slides
+	public int currentSlideNumber = 0; // the slide number of the current main.java.logic.Slide
+	private SlideViewerComponent slideViewComponent = null; // the view component of the Slides
 
 	public Presentation() {
 		slideViewComponent = null;
@@ -87,7 +87,7 @@ public class Presentation {
 		showList.add(slide);
 	}
 
-	// Get a slide with a certain slidenumber
+	// Get a slide with a certain slide number
 	public Slide getSlide(int number) {
 		if (number < 0 || number >= getSize()){
 			return null;
