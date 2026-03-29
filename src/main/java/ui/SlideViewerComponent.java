@@ -3,6 +3,8 @@ package main.java.ui;
 import main.java.logic.PresentationObserver;
 import main.java.logic.Slide;
 import main.java.logic.Presentation;
+import main.java.businesslogic.Slide;
+import main.java.businesslogic.Presentation;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -30,6 +32,9 @@ public class SlideViewerComponent extends JComponent implements PresentationObse
 	private Font labelFont = null; // font for labels
 	private static final Color COLOR = Color.black;
 	private static final long serialVersionUID = 227L;
+	
+	private static final Color BGCOLOR = Color.white;
+	private static final Color COLOR = Color.black;
 	private static final String FONTNAME = "Dialog";
 	private static final int FONTSTYLE = Font.BOLD;
 	private static final int FONTHEIGHT = 10;
@@ -50,6 +55,7 @@ public class SlideViewerComponent extends JComponent implements PresentationObse
 
 	// draw the slide
 	public void paintComponent(Graphics g) {
+		g.setColor(BGCOLOR);
 		g.fillRect(0, 0, getSize().width, getSize().height);
 		if (presentation.getSlideNumber() < 0 || slide == null) {
 			return;

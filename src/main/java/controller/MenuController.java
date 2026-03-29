@@ -1,7 +1,7 @@
 package main.java.controller;
 
 import main.java.ui.AboutBox;
-import main.java.logic.Presentation;
+import main.java.businesslogic.Presentation;
 import main.java.io.Accessor;
 import main.java.io.XMLAccessor;
 

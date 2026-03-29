@@ -1,4 +1,4 @@
-package main.java.logic;
+package main.java.businesslogic;
 
 import java.awt.Color;
 import java.awt.Font;
