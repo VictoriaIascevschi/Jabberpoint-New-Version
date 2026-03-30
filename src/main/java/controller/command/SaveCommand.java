@@ -21,9 +21,20 @@ public class SaveCommand implements Command {
 
     @Override
     public void execute() {
+        FileDialog fd = new FileDialog(parent, "Save Presentation", FileDialog.SAVE);
+        fd.setVisible(true);
+
+        String filename = fd.getFile();
+
+        if (filename == null) {
+            return;
+        }
+
+        String fullPath = fd.getDirectory() + filename;
+
         Accessor xmlAccessor = new XMLAccessor();
         try {
-            xmlAccessor.saveFile(presentation, SAVEFILE);
+            xmlAccessor.saveFile(presentation, fullPath);
         } catch (IOException exc) {
             JOptionPane.showMessageDialog(parent, IOEX + exc,
                     SAVEERR, JOptionPane.ERROR_MESSAGE);
