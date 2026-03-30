@@ -27,16 +27,51 @@ public class OpenCommand implements Command {
         return this.parent;
     }
 
+    private FileDialog getFileDialog() {
+        FileDialog fileDialog = new FileDialog(parent, "Open Presentation", FileDialog.LOAD);
+
+        fileDialog.setFile("*.xml");
+        fileDialog.setVisible(true);
+
+        return fileDialog;
+    }
+
+    private String getFullPath() {
+        FileDialog fileDialog = getFileDialog();
+
+        String fileName = fileDialog.getFile();
+        String directory = fileDialog.getDirectory();
+
+        if (directory == null || fileName == null) {
+            return null;  // User cancelled
+        }
+
+        return directory + fileName;
+    }
+
+    private void showErrorMessage(Exception exc) {
+        JOptionPane.showMessageDialog(parent,
+                "IO Exception: " + exc,
+                "Load Error",
+                JOptionPane.ERROR_MESSAGE);
+    }
+
     @Override
     public void execute() {
+        String fullPath = getFullPath();
+
+        if (fullPath == null) {
+            return;  // User cancelled, do nothing
+        }
+
         presentation.clear();
         Accessor xmlAccessor = new XMLAccessor();
+
         try {
             xmlAccessor.loadFile(presentation, FILE);
             presentation.setSlideNumber(0);
         } catch (IOException exc) {
-            JOptionPane.showMessageDialog(parent, IOEX + exc,
-                    LOADERR, JOptionPane.ERROR_MESSAGE);
+            showErrorMessage(exc);
         }
 
         parent.repaint();
