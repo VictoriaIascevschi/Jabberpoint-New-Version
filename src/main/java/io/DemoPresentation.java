@@ -52,7 +52,7 @@ class DemoPresentation extends Accessor
         slide.append(factory.createSlideItem(1, "This is the end of the presentation."));
         SlideItemFactory slideItemFactory = new SlideItemFactory();
 
-        slide.append(slideItemFactory.createSlideItem("image", 1, "main.java.app.JabberPoint.jpg"));
+        slide.append(slideItemFactory.createSlideItem("image", 1, "resources/serclogo_fc.jpg"));
         slide.append(slideItemFactory.createSlideItem("text", 1, "Some text"));
 
         presentation.append(slide);

@@ -68,7 +68,7 @@ public class OpenCommand implements Command {
         Accessor xmlAccessor = new XMLAccessor();
 
         try {
-            xmlAccessor.loadFile(presentation, FILE);
+            xmlAccessor.loadFile(presentation, fullPath);
             presentation.setSlideNumber(0);
         } catch (IOException exc) {
             showErrorMessage(exc);

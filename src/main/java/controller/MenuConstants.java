@@ -13,8 +13,6 @@ public class MenuConstants {
     public static final String PREV = "Prev";
     public static final String SAVE = "Save";
     public static final String VIEW = "View";
-
-    public static final String TESTFILE = "test.xml";
     public static final String SAVEFILE = "dump.xml";
 
     public static final String IOEX = "IO Exception: ";

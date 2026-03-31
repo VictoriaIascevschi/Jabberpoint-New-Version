@@ -37,7 +37,7 @@ public class SaveCommand implements Command {
 
     private FileDialog getFileDialog() {
         FileDialog fileDialog = new FileDialog(parent, "Save Presentation", FileDialog.SAVE);
-        fileDialog.setFile("presentation.xml");
+        fileDialog.setFile(SAVEFILE);
         fileDialog.setVisible(true);
 
         return fileDialog;
