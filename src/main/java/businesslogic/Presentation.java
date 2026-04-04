@@ -57,6 +57,16 @@ public class Presentation
         this.notifyObservers();
     }
 
+    public ArrayList<PresentationObserver> getObservers()
+    {
+        return this.observers;
+    }
+
+    public void setObservers(ArrayList<PresentationObserver> observers)
+    {
+        this.observers = observers;
+    }
+
     // go to the previous slide unless your at the beginning of the presentation
     public void prevSlide()
     {
@@ -120,6 +130,11 @@ public class Presentation
 
     public void removeObserver(PresentationObserver observer)
     {
+        if(this.getObservers().size() == 1)
+        {
+            this.observers.remove(observer);
+        }
+
         Iterator<PresentationObserver> it = this.observers.iterator();
         while (it.hasNext())
         {

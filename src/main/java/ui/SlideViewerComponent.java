@@ -36,7 +36,47 @@ public class SlideViewerComponent extends JComponent implements PresentationObse
 	private static final int YPOS = 20;
 	private JFrame frame = null;
 
-	public SlideViewerComponent(Presentation presentation, JFrame frame)
+    public Presentation getPresentation()
+    {
+        return this.presentation;
+    }
+
+    public void setPresentation(Presentation presentation)
+    {
+        this.presentation = presentation;
+    }
+
+    public Slide getSlide()
+    {
+        return this.slide;
+    }
+
+    public void setSlide(Slide slide)
+    {
+        this.slide = slide;
+    }
+
+    public Font getLabelFont()
+    {
+        return this.labelFont;
+    }
+
+    public void setLabelFont(Font labelFont)
+    {
+        this.labelFont = labelFont;
+    }
+
+    public JFrame getFrame()
+    {
+        return this.frame;
+    }
+
+    public void setFrame(JFrame frame)
+    {
+        this.frame = frame;
+    }
+
+    public SlideViewerComponent(Presentation presentation, JFrame frame)
 	{
 		setBackground(BGCOLOR);
 		this.presentation = presentation;
@@ -51,20 +91,20 @@ public class SlideViewerComponent extends JComponent implements PresentationObse
     }
 
     // draw the slide
-    public void paintComponent(Graphics g)
+    public void paintComponent(Graphics graphics)
     {
-        g.setColor(BGCOLOR);
-        g.fillRect(0, 0, getSize().width, getSize().height);
+        graphics.setColor(BGCOLOR);
+        graphics.fillRect(0, 0, getSize().width, getSize().height);
         if (presentation.getSlideNumber() < 0 || slide == null)
         {
             return;
         }
-        g.setFont(labelFont);
-        g.setColor(COLOR);
-        g.drawString("Slide " + (1 + presentation.getSlideNumber()) + " of " +
+        graphics.setFont(labelFont);
+        graphics.setColor(COLOR);
+        graphics.drawString("Slide " + (1 + presentation.getSlideNumber()) + " of " +
                 presentation.getSize(), XPOS, YPOS);
         Rectangle area = new Rectangle(0, YPOS, getWidth(), (getHeight() - YPOS));
-        slide.draw(g, area, this);
+        slide.draw(graphics, area, this);
     }
 
     @Override
