@@ -1,4 +1,4 @@
-package main.java.controller.command;
+package controller.command;
 
 public interface Command {
     void execute();

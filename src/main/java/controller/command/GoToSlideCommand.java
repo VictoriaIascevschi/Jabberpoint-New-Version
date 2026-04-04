@@ -1,11 +1,11 @@
-package main.java.controller.command;
+package controller.command;
 
-import main.java.businesslogic.Presentation;
+import businesslogic.Presentation;
 
 import javax.swing.*;
 import java.awt.*;
 
-import static main.java.controller.MenuConstants.PAGENR;
+import static controller.MenuConstants.PAGENR;
 
 public class GoToSlideCommand implements Command {
     private Presentation presentation;

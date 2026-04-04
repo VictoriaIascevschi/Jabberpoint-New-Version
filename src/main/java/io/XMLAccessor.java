@@ -1,4 +1,4 @@
-package main.java.io;
+package io;
 
 import java.util.Vector;
 import java.io.File;
@@ -10,7 +10,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import main.java.businesslogic.*;
+import businesslogic.*;
+import io.Accessor;
 import org.xml.sax.SAXException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

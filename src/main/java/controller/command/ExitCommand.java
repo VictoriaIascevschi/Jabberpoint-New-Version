@@ -1,6 +1,6 @@
-package main.java.controller.command;
+package controller.command;
 
-import main.java.businesslogic.Presentation;
+import businesslogic.Presentation;
 
 public class ExitCommand implements Command {
     private Presentation presentation;

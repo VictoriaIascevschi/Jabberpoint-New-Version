@@ -1,8 +1,8 @@
-package main.java.controller;
-import main.java.controller.command.Command;
-import main.java.controller.command.ExitCommand;
-import main.java.controller.command.NextSlideCommand;
-import main.java.controller.command.PreviousSlideCommand;
+package controller;
+import controller.command.Command;
+import controller.command.ExitCommand;
+import controller.command.NextSlideCommand;
+import controller.command.PreviousSlideCommand;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;

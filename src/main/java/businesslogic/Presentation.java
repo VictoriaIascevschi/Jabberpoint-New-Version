@@ -1,7 +1,7 @@
-package main.java.businesslogic;
+package businesslogic;
 
-import main.java.io.Accessor;
-import main.java.ui.SlideViewerComponent;
+import io.Accessor;
+import ui.SlideViewerComponent;
 
 import java.util.ArrayList;
 import java.util.Iterator;

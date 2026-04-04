@@ -1,9 +1,9 @@
-package main.java.ui;
+package ui;
 
-import main.java.controller.command.*;
-import main.java.businesslogic.Presentation;
-import main.java.controller.KeyController;
-import main.java.controller.MenuController;
+import controller.command.*;
+import businesslogic.Presentation;
+import controller.KeyController;
+import controller.MenuController;
 
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JFrame;
 
-import static main.java.controller.MenuConstants.*;
+import static controller.MenuConstants.*;
 
 /**
  * <p>The application window for a slideviewcomponent</p>

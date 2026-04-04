@@ -1,10 +1,10 @@
-package main.java.app;
+package app;
 
-import main.java.businesslogic.Style;
-import main.java.businesslogic.Presentation;
-import main.java.ui.SlideViewerFrame;
-import main.java.io.Accessor;
-import main.java.io.XMLAccessor;
+import businesslogic.Style;
+import businesslogic.Presentation;
+import ui.SlideViewerFrame;
+import io.Accessor;
+import io.XMLAccessor;
 
 import javax.swing.JOptionPane;
 
