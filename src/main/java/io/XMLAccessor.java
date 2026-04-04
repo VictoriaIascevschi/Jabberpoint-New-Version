@@ -18,6 +18,7 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.NodeList;
 
 
+
 /**
  * main.java.io.XMLAccessor, reads and writes XML files
  *
@@ -66,7 +67,14 @@ public class XMLAccessor extends Accessor
         int slideNumber, itemNumber, max = 0, maxItems = 0;
         try
         {
-            DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            presentation.clear();
+
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            factory.setValidating(false);
+            factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+
+            DocumentBuilder builder = factory.newDocumentBuilder();
+
             Document document = builder.parse(new File(filename)); // Create a JDOM document
             Element doc = document.getDocumentElement();
             presentation.setTitle(getTitle(doc, SHOWTITLE));
