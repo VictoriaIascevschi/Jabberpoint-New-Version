@@ -1,4 +1,4 @@
-package main.java.businesslogic;
+package businesslogic;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;

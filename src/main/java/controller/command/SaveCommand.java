@@ -1,16 +1,14 @@
-package main.java.controller.command;
+package controller.command;
 
-import main.java.io.Accessor;
-import main.java.io.XMLAccessor;
-import main.java.businesslogic.Presentation;
+import io.Accessor;
+import io.XMLAccessor;
+import businesslogic.Presentation;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 
-import static main.java.controller.MenuConstants.*;
+import static controller.MenuConstants.*;
 
 public class SaveCommand implements Command {
     private Presentation presentation;

@@ -1,8 +1,8 @@
-package main.java.ui;
+package ui;
 
-import main.java.businesslogic.PresentationObserver;
-import main.java.businesslogic.Slide;
-import main.java.businesslogic.Presentation;
+import businesslogic.PresentationObserver;
+import businesslogic.Slide;
+import businesslogic.Presentation;
 
 import java.awt.Color;
 import java.awt.Font;

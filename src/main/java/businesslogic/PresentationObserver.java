@@ -1,4 +1,4 @@
-package main.java.businesslogic;
+package businesslogic;
 
 public interface PresentationObserver
 {

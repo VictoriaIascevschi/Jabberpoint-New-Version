@@ -1,6 +1,6 @@
-package main.java.controller.command;
+package controller.command;
 
-import main.java.ui.AboutBox;
+import ui.AboutBox;
 
 import java.awt.*;
 

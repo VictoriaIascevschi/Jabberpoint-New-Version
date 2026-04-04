@@ -1,6 +1,6 @@
-package main.java.controller;
+package controller;
 
-import main.java.controller.command.Command;
+import controller.command.Command;
 
 import java.awt.MenuBar;
 import java.awt.Frame;

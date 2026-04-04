@@ -1,8 +1,8 @@
-package main.java.io;
+package io;
 
-import main.java.businesslogic.Presentation;
-import main.java.businesslogic.Slide;
-import main.java.businesslogic.SlideItemFactory;
+import businesslogic.Presentation;
+import businesslogic.Slide;
+import businesslogic.SlideItemFactory;
 
 /**
  * A built-in demo-presentation
