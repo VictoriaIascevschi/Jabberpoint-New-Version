@@ -1,6 +1,7 @@
 package controller;
 
-public class MenuConstants {
+public class MenuConstants
+{
     public static final String ABOUT = "About";
     public static final String FILE = "File";
     public static final String EXIT = "Exit";
