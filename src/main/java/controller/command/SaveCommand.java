@@ -19,6 +19,14 @@ public class SaveCommand implements Command {
         this.parent = parent;
     }
 
+    public Presentation getPresentation() {
+        return this.presentation;
+    }
+
+    public Frame getParent() {
+        return this.parent;
+    }
+
     private void showSuccessMessage()
     {
         JOptionPane.showMessageDialog(parent,
