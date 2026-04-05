@@ -13,23 +13,26 @@ import java.util.Map;
  * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman
  * @version 1.6 2014/05/16 Sylvia Stuurman
  */
-public class MenuController extends MenuBar {
-	private static final long serialVersionUID = 227L;
+public class MenuController extends MenuBar
+{
+    private static final long serialVersionUID = 227L;
 
     private MenuBuilder menuBuilder;
 
-	public MenuController(Frame parent, Map<String, Command> commandMap) {
+    public MenuController(Frame parent, Map<String, Command> commandMap)
+    {
         this.menuBuilder = new MenuBuilder(parent, commandMap);
 
-		initializeMenus();
-	}
+        initializeMenus();
+    }
 
-	private void initializeMenus() {
-		add(menuBuilder.buildFileMenu());
-		add(menuBuilder.buildViewMenu());
+    private void initializeMenus()
+    {
+        add(menuBuilder.buildFileMenu());
+        add(menuBuilder.buildViewMenu());
 
-		Menu helpMenu = menuBuilder.buildHelpMenu();
-		add(helpMenu);
-		setHelpMenu(helpMenu);
-	}
+        Menu helpMenu = menuBuilder.buildHelpMenu();
+        add(helpMenu);
+        setHelpMenu(helpMenu);
+    }
 }

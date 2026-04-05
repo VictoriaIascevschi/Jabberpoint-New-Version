@@ -1,5 +1,6 @@
 package controller.command;
 
-public interface Command {
+public interface Command
+{
     void execute();
 }

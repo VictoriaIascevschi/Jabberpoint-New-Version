@@ -1,26 +1,31 @@
 package controller.command;
 
 import businesslogic.Presentation;
-import businesslogic.testable.TestablePresentation;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
-class ExitCommandTest {
-
+@ExtendWith(MockitoExtension.class)
+class ExitCommandTest
+{
     private ExitCommand exitCommand;
-    private TestablePresentation presentation;
+    @Mock
+    private Presentation presentation;
 
     @BeforeEach
-    void setUp() {
-        presentation = new TestablePresentation();
+    void setUp()
+    {
         exitCommand = new ExitCommand(presentation);
     }
 
     @Test
-    void getPresentation_withValidPresentation_returnsSamePresentation() {
+    void getPresentation_withValidPresentation_returnsSamePresentation()
+    {
         // Arrange
         Presentation expectedPresentation = presentation;
 
@@ -32,40 +37,44 @@ class ExitCommandTest {
     }
 
     @Test
-    void execute_whenCalled_callsExitOnPresentation() {
+    void execute_whenCalled_callsExitOnPresentation()
+    {
         // Act
         exitCommand.execute();
 
         // Assert
-        assertTrue(presentation.wasExitCalled());
+        verify(presentation).exit(0);
     }
 
     @Test
-    void execute_whenCalled_callsExitWithStatusCodeZero() {
+    void execute_whenCalled_callsExitWithStatusCodeZero()
+    {
         // Act
         exitCommand.execute();
 
         // Assert
-        assertEquals(0, presentation.getExitStatusCode());
+        verify(presentation).exit(0);
     }
 
     @Test
-    void execute_whenCalled_callsExitExactlyOnce() {
+    void execute_whenCalled_callsExitExactlyOnce()
+    {
         // Act
         exitCommand.execute();
 
         // Assert
-        assertEquals(1, presentation.getExitCallCount());
+        verify(presentation, times(1)).exit(0);
     }
 
     @Test
-    void execute_whenCalledMultipleTimes_callsExitMultipleTimes() {
+    void execute_whenCalledMultipleTimes_callsExitMultipleTimes()
+    {
         // Act
         exitCommand.execute();
         exitCommand.execute();
         exitCommand.execute();
 
         // Assert
-        assertEquals(3, presentation.getExitCallCount());
+        verify(presentation, times(3)).exit(0);
     }
 }

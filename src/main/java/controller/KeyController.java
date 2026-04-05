@@ -1,4 +1,5 @@
 package controller;
+
 import controller.command.Command;
 import controller.command.ExitCommand;
 import controller.command.NextSlideCommand;
@@ -16,17 +17,21 @@ import java.util.Map;
  * @version 1.6 2014/05/16 Sylvia Stuurman
  */
 
-public class KeyController extends KeyAdapter {
-	Map<Integer, Command> commandMap = new HashMap<>();
+public class KeyController extends KeyAdapter
+{
+    Map<Integer, Command> commandMap = new HashMap<>();
 
-	public KeyController(Map<Integer, Command> commandMap) {
-		this.commandMap = commandMap;
-	}
+    public KeyController(Map<Integer, Command> commandMap)
+    {
+        this.commandMap = commandMap;
+    }
 
-	public void keyPressed(KeyEvent keyEvent) {
-		Command command = commandMap.get(keyEvent.getKeyCode());
-		if (command != null) {
-			command.execute();
-		}
-	}
+    public void keyPressed(KeyEvent keyEvent)
+    {
+        Command command = commandMap.get(keyEvent.getKeyCode());
+        if (command != null)
+        {
+            command.execute();
+        }
+    }
 }

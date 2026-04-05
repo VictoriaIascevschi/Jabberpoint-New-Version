@@ -9,10 +9,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PresentationTest
 {
-    Presentation presentation;
-    Slide slide1;
-    Slide slide2;
-    Slide slide3;
+    private Presentation presentation;
+    private Slide slide1;
+    private Slide slide2;
+    private Slide slide3;
 
     @BeforeEach
     void setUp()
@@ -113,7 +113,7 @@ class PresentationTest
     }
 
     @Test
-    void notifyObservers()
+    void notifyObservers_whenCurrentSlideChanges_updatesObserverWithCurrentSlide()
     {
         CapturingObserver observer = new CapturingObserver();
         presentation.addObserver(observer);
@@ -125,7 +125,8 @@ class PresentationTest
 
     private PresentationObserver createDummyObserver()
     {
-        return (presentation, data) -> {
+        return (presentation, data) ->
+        {
             // no-op observer used for list-management tests
         };
     }
