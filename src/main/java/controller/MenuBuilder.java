@@ -8,16 +8,19 @@ import java.util.Map;
 import static controller.MenuConstants.FILE;
 import static controller.MenuConstants.*;
 
-public class MenuBuilder {
+public class MenuBuilder
+{
     private Frame parent;
     private Map<String, Command> commandMap;
 
-    public MenuBuilder(Frame parent, Map<String, Command> commandMap) {
+    public MenuBuilder(Frame parent, Map<String, Command> commandMap)
+    {
         this.parent = parent;
         this.commandMap = commandMap;
     }
 
-    public Menu buildFileMenu() {
+    public Menu buildFileMenu()
+    {
         Menu fileMenu = new Menu(FILE);
 
         fileMenu.add(createMenuItem("Open", commandMap.get(OPEN)));
@@ -29,7 +32,8 @@ public class MenuBuilder {
         return fileMenu;
     }
 
-    public Menu buildViewMenu() {
+    public Menu buildViewMenu()
+    {
         Menu viewMenu = new Menu(VIEW);
 
         viewMenu.add(createMenuItem("Next", commandMap.get(NEXT)));
@@ -39,7 +43,8 @@ public class MenuBuilder {
         return viewMenu;
     }
 
-    public Menu buildHelpMenu() {
+    public Menu buildHelpMenu()
+    {
         Menu helpMenu = new Menu(HELP);
 
         helpMenu.add(createMenuItem("About", commandMap.get(ABOUT)));
@@ -47,7 +52,8 @@ public class MenuBuilder {
         return helpMenu;
     }
 
-    private MenuItem createMenuItem(String label, Command command) {
+    private MenuItem createMenuItem(String label, Command command)
+    {
         MenuItem menuItem = new MenuItem(label);
         menuItem.addActionListener(e -> command.execute());
 

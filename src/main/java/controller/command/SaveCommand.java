@@ -10,20 +10,24 @@ import java.io.IOException;
 
 import static controller.MenuConstants.*;
 
-public class SaveCommand implements Command {
+public class SaveCommand implements Command
+{
     private Presentation presentation;
     private Frame parent;
 
-    public SaveCommand(Presentation presentation, Frame parent) {
+    public SaveCommand(Presentation presentation, Frame parent)
+    {
         this.presentation = presentation;
         this.parent = parent;
     }
 
-    public Presentation getPresentation() {
+    public Presentation getPresentation()
+    {
         return this.presentation;
     }
 
-    public Frame getParent() {
+    public Frame getParent()
+    {
         return this.parent;
     }
 
@@ -41,7 +45,8 @@ public class SaveCommand implements Command {
                 SAVEERR, JOptionPane.ERROR_MESSAGE);
     }
 
-    private FileDialog getFileDialog() {
+    private FileDialog getFileDialog()
+    {
         FileDialog fileDialog = new FileDialog(parent, "Save Presentation", FileDialog.SAVE);
         fileDialog.setFile(SAVEFILE);
         fileDialog.setVisible(true);
@@ -49,25 +54,30 @@ public class SaveCommand implements Command {
         return fileDialog;
     }
 
-    private String ensureXMLExtension(String fileName) {
-        if (fileName == null) {
+    private String ensureXMLExtension(String fileName)
+    {
+        if (fileName == null)
+        {
             return null;
         }
 
-        if (!fileName.toLowerCase().endsWith(".xml")) {
+        if (!fileName.toLowerCase().endsWith(".xml"))
+        {
             fileName += ".xml";
         }
 
         return fileName;
     }
 
-    private String getFullPath() {
+    private String getFullPath()
+    {
         FileDialog fileDialog = getFileDialog();
 
         String fileName = fileDialog.getFile();
         String directory = fileDialog.getDirectory();
 
-        if (directory == null || fileName == null) {
+        if (directory == null || fileName == null)
+        {
             return null;
         }
 
@@ -77,19 +87,23 @@ public class SaveCommand implements Command {
     }
 
     @Override
-    public void execute() {
+    public void execute()
+    {
         Accessor xmlAccessor = new XMLAccessor();
 
         String fullPath = getFullPath();
 
-        if (fullPath == null) {
+        if (fullPath == null)
+        {
             return; // user cancelled -> do nothing
         }
 
-        try {
+        try
+        {
             xmlAccessor.saveFile(presentation, fullPath);
             showSuccessMessage();
-        } catch (IOException exc) {
+        } catch (IOException exc)
+        {
             showErrorMessage(exc);
         }
     }

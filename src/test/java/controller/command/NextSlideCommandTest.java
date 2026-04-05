@@ -9,13 +9,14 @@ import businesslogic.Slide;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class NextSlideCommandTest {
-
+class NextSlideCommandTest
+{
     private Presentation realPresentation;
     private NextSlideCommand nextSlideCommand;
 
     @BeforeEach
-    void setUp() {
+    void setUp()
+    {
         realPresentation = new Presentation();
 
         // Adding slides to the presentation
@@ -28,7 +29,8 @@ class NextSlideCommandTest {
     }
 
     @Test
-    void execute_advancesToNextSlide() {
+    void execute_advancesToNextSlide()
+    {
         int initialSlide = realPresentation.getSlideNumber();
 
         nextSlideCommand.execute();
@@ -37,7 +39,8 @@ class NextSlideCommandTest {
     }
 
     @Test
-    void getPresentation_returnsPresentation() {
+    void getPresentation_returnsPresentation()
+    {
         assertSame(realPresentation, nextSlideCommand.getPresentation());
     }
 }

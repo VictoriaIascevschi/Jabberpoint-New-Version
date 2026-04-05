@@ -8,24 +8,30 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
-public class OpenCommand implements Command {
+public class OpenCommand implements Command
+{
     private Presentation presentation;
-    private Frame parent;;
+    private Frame parent;
+    ;
 
-    public OpenCommand(Presentation presentation, Frame parent) {
+    public OpenCommand(Presentation presentation, Frame parent)
+    {
         this.presentation = presentation;
         this.parent = parent;
     }
 
-    public Presentation getPresentation() {
+    public Presentation getPresentation()
+    {
         return this.presentation;
     }
 
-    public Frame getParent() {
+    public Frame getParent()
+    {
         return this.parent;
     }
 
-    private FileDialog getFileDialog() {
+    private FileDialog getFileDialog()
+    {
         FileDialog fileDialog = new FileDialog(parent, "Open Presentation", FileDialog.LOAD);
 
         fileDialog.setFile("*.xml");
@@ -34,20 +40,23 @@ public class OpenCommand implements Command {
         return fileDialog;
     }
 
-    private String getFullPath() {
+    private String getFullPath()
+    {
         FileDialog fileDialog = getFileDialog();
 
         String fileName = fileDialog.getFile();
         String directory = fileDialog.getDirectory();
 
-        if (directory == null || fileName == null) {
+        if (directory == null || fileName == null)
+        {
             return null;  // User cancelled
         }
 
         return directory + fileName;
     }
 
-    private void showErrorMessage(Exception exc) {
+    private void showErrorMessage(Exception exc)
+    {
         JOptionPane.showMessageDialog(parent,
                 "IO Exception: " + exc,
                 "Load Error",
@@ -55,20 +64,24 @@ public class OpenCommand implements Command {
     }
 
     @Override
-    public void execute() {
+    public void execute()
+    {
         String fullPath = getFullPath();
 
-        if (fullPath == null) {
+        if (fullPath == null)
+        {
             return;  // User cancelled, do nothing
         }
 
         presentation.clear();
         Accessor xmlAccessor = new XMLAccessor();
 
-        try {
+        try
+        {
             xmlAccessor.loadFile(presentation, fullPath);
             presentation.setSlideNumber(0);
-        } catch (IOException exc) {
+        } catch (IOException exc)
+        {
             showErrorMessage(exc);
         }
 

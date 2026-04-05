@@ -1,9 +1,11 @@
 package controller;
 
 import controller.command.Command;
-import controller.command.testable.TestableCommand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.awt.Canvas;
 import java.awt.event.KeyEvent;
@@ -11,24 +13,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
-class KeyControllerTest {
-
+@ExtendWith(MockitoExtension.class)
+class KeyControllerTest
+{
     private KeyController keyController;
     private Map<Integer, Command> commandMap;
-    private TestableCommand mockCommand;
-    private TestableCommand anotherCommand;
+    @Mock
+    private Command mockCommand;
+    @Mock
+    private Command anotherCommand;
 
     @BeforeEach
     void setUp() {
         commandMap = new HashMap<>();
-        mockCommand = new TestableCommand();
-        anotherCommand = new TestableCommand();
         keyController = new KeyController(commandMap);
     }
 
     @Test
-    void constructor_withValidCommandMap_storesCommandMap() {
+    void constructor_withValidCommandMap_storesCommandMap()
+    {
         // Arrange
         Map<Integer, Command> expectedMap = commandMap;
 
@@ -40,7 +45,8 @@ class KeyControllerTest {
     }
 
     @Test
-    void keyPressed_whenKeyCodeExistsInMap_executesCorrespondingCommand() {
+    void keyPressed_whenKeyCodeExistsInMap_executesCorrespondingCommand()
+    {
         // Arrange
         int keyCode = KeyEvent.VK_ENTER;
         commandMap.put(keyCode, mockCommand);
@@ -50,11 +56,12 @@ class KeyControllerTest {
         keyController.keyPressed(keyEvent);
 
         // Assert
-        assertTrue(mockCommand.wasExecuted());
+        verify(mockCommand).execute();
     }
 
     @Test
-    void keyPressed_whenKeyCodeExistsInMap_executesOnlyOnce() {
+    void keyPressed_whenKeyCodeExistsInMap_executesOnlyOnce()
+    {
         // Arrange
         int keyCode = KeyEvent.VK_ENTER;
         commandMap.put(keyCode, mockCommand);
@@ -64,11 +71,12 @@ class KeyControllerTest {
         keyController.keyPressed(keyEvent);
 
         // Assert
-        assertEquals(1, mockCommand.getExecutionCount());
+        verify(mockCommand, times(1)).execute();
     }
 
     @Test
-    void keyPressed_whenKeyCodeDoesNotExistInMap_doesNotExecuteAnyCommand() {
+    void keyPressed_whenKeyCodeDoesNotExistInMap_doesNotExecuteAnyCommand()
+    {
         // Arrange
         int keyCode = KeyEvent.VK_ENTER;
         // commandMap is empty
@@ -78,11 +86,12 @@ class KeyControllerTest {
         keyController.keyPressed(keyEvent);
 
         // Assert
-        assertFalse(mockCommand.wasExecuted());
+        verifyNoInteractions(mockCommand);
     }
 
     @Test
-    void keyPressed_whenMultipleKeyCodesExist_executesOnlyMatchingCommand() {
+    void keyPressed_whenMultipleKeyCodesExist_executesOnlyMatchingCommand()
+    {
         // Arrange
         int enterKeyCode = KeyEvent.VK_ENTER;
         int spaceKeyCode = KeyEvent.VK_SPACE;
@@ -94,11 +103,12 @@ class KeyControllerTest {
         keyController.keyPressed(keyEvent);
 
         // Assert
-        assertTrue(mockCommand.wasExecuted());
+        verify(mockCommand).execute();
     }
 
     @Test
-    void keyPressed_whenMultipleKeyCodesExist_doesNotExecuteNonMatchingCommand() {
+    void keyPressed_whenMultipleKeyCodesExist_doesNotExecuteNonMatchingCommand()
+    {
         // Arrange
         int enterKeyCode = KeyEvent.VK_ENTER;
         int spaceKeyCode = KeyEvent.VK_SPACE;
@@ -110,11 +120,12 @@ class KeyControllerTest {
         keyController.keyPressed(keyEvent);
 
         // Assert
-        assertFalse(anotherCommand.wasExecuted());
+        verifyNoInteractions(anotherCommand);
     }
 
     @Test
-    void keyPressed_withDifferentKeyCodes_executesCorrectCommandForEachKey() {
+    void keyPressed_withDifferentKeyCodes_executesCorrectCommandForEachKey()
+    {
         // Arrange
         int enterKeyCode = KeyEvent.VK_ENTER;
         int spaceKeyCode = KeyEvent.VK_SPACE;
@@ -122,17 +133,16 @@ class KeyControllerTest {
         commandMap.put(spaceKeyCode, anotherCommand);
 
         KeyEvent enterEvent = createKeyPressedEvent(enterKeyCode);
-        KeyEvent spaceEvent = createKeyPressedEvent(spaceKeyCode);
-
         // Act
         keyController.keyPressed(enterEvent);
 
         // Assert
-        assertTrue(mockCommand.wasExecuted());
+        verify(mockCommand).execute();
     }
 
     @Test
-    void keyPressed_withDifferentKeyCodes_executesCorrectCommandForSpaceKey() {
+    void keyPressed_withDifferentKeyCodes_executesCorrectCommandForSpaceKey()
+    {
         // Arrange
         int enterKeyCode = KeyEvent.VK_ENTER;
         int spaceKeyCode = KeyEvent.VK_SPACE;
@@ -145,11 +155,12 @@ class KeyControllerTest {
         keyController.keyPressed(spaceEvent);
 
         // Assert
-        assertTrue(anotherCommand.wasExecuted());
+        verify(anotherCommand).execute();
     }
 
     @Test
-    void keyPressed_whenCommandIsNullInMap_doesNotThrowException() {
+    void keyPressed_whenCommandIsNullInMap_doesNotThrowException()
+    {
         // Arrange
         int keyCode = KeyEvent.VK_ENTER;
         commandMap.put(keyCode, null);
@@ -160,7 +171,8 @@ class KeyControllerTest {
     }
 
     @Test
-    void keyPressed_whenKeyEventHasNoModifiers_stillExecutesCommand() {
+    void keyPressed_whenKeyEventHasNoModifiers_stillExecutesCommand()
+    {
         // Arrange
         int keyCode = KeyEvent.VK_ENTER;
         commandMap.put(keyCode, mockCommand);
@@ -170,10 +182,11 @@ class KeyControllerTest {
         keyController.keyPressed(keyEvent);
 
         // Assert
-        assertTrue(mockCommand.wasExecuted());
+        verify(mockCommand).execute();
     }
 
-    private KeyEvent createKeyPressedEvent(int keyCode) {
+    private KeyEvent createKeyPressedEvent(int keyCode)
+    {
         return new KeyEvent(new Canvas(), KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, keyCode, ' ');
     }
 }

@@ -1,30 +1,35 @@
 package controller.command;
 
 import businesslogic.Presentation;
-import businesslogic.testable.TestablePresentation;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.awt.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
-class NewPresentationCommandTest {
-
+@ExtendWith(MockitoExtension.class)
+class NewPresentationCommandTest
+{
     private NewPresentationCommand command;
-    private TestablePresentation presentation;
+    @Mock
+    private Presentation presentation;
+    @Mock
     private Frame parent;
 
     @BeforeEach
-    void setUp() {
-        presentation = new TestablePresentation();
-        parent = null;
+    void setUp()
+    {
         command = new NewPresentationCommand(presentation, parent);
     }
 
     @Test
-    void getPresentation_withValidPresentation_returnsSamePresentation() {
+    void getPresentation_withValidPresentation_returnsSamePresentation()
+    {
         // Arrange
         Presentation expectedPresentation = presentation;
 
@@ -36,7 +41,8 @@ class NewPresentationCommandTest {
     }
 
     @Test
-    void getParent_withValidParent_returnsSameParent() {
+    void getParent_withValidParent_returnsSameParent()
+    {
         // Arrange
         Frame expectedParent = parent;
 
@@ -48,56 +54,66 @@ class NewPresentationCommandTest {
     }
 
     @Test
-    void execute_whenCalled_callsClearOnPresentation() {
+    void execute_whenCalled_callsClearOnPresentation()
+    {
         // Act
         command.execute();
 
         // Assert
-        assertTrue(presentation.wasClearCalled());
+        verify(presentation).clear();
     }
 
     @Test
-    void execute_whenCalled_doesNotCallExit() {
+    void execute_whenCalled_repaintsParent()
+    {
         // Act
         command.execute();
 
         // Assert
-        assertFalse(presentation.wasExitCalled());
+        verify(parent).repaint();
     }
 
     @Test
-    void execute_whenCalled_callsClearExactlyOnce() {
+    void execute_whenCalled_callsClearExactlyOnce()
+    {
         // Act
         command.execute();
 
         // Assert
-        assertEquals(1, presentation.getClearCallCount());
+        verify(presentation, times(1)).clear();
     }
 
     @Test
-    void execute_whenCalledMultipleTimes_callsClearMultipleTimes() {
-        // Act
-        command.execute();
-        command.execute();
-        command.execute();
-
-        // Assert
-        assertEquals(3, presentation.getClearCallCount());
-    }
-
-    @Test
-    void execute_whenCalledMultipleTimes_doesNotCallExit() {
+    void execute_whenCalledMultipleTimes_callsClearMultipleTimes()
+    {
         // Act
         command.execute();
         command.execute();
         command.execute();
 
         // Assert
-        assertFalse(presentation.wasExitCalled());
+        verify(presentation, times(3)).clear();
     }
 
     @Test
-    void execute_whenParentIsNull_doesNotThrow() {
-        assertDoesNotThrow(() -> command.execute());
+    void execute_whenCalledMultipleTimes_repaintsParentMultipleTimes()
+    {
+        // Act
+        command.execute();
+        command.execute();
+        command.execute();
+
+        // Assert
+        verify(parent, times(3)).repaint();
+    }
+
+    @Test
+    void execute_whenParentIsNull_doesNotThrow()
+    {
+        NewPresentationCommand commandWithNullParent = new NewPresentationCommand(presentation, null);
+
+        // Act + Assert
+        assertDoesNotThrow(commandWithNullParent::execute);
+        verify(presentation).clear();
     }
 }
