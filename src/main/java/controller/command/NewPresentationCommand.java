@@ -1,6 +1,6 @@
-package main.java.controller.command;
+package controller.command;
 
-import main.java.businesslogic.Presentation;
+import businesslogic.Presentation;
 
 import java.awt.*;
 
@@ -24,6 +24,8 @@ public class NewPresentationCommand implements Command {
     @Override
     public void execute() {
         presentation.clear();
-        parent.repaint();
+        if (parent != null) {
+            parent.repaint();
+        }
     }
 }

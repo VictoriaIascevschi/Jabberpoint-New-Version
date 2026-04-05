@@ -1,6 +1,6 @@
-package main.java.io;
+package io;
 
-import main.java.businesslogic.Presentation;
+import businesslogic.Presentation;
 
 import java.io.IOException;
 
