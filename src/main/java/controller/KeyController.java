@@ -17,7 +17,7 @@ import java.util.Map;
  */
 
 public class KeyController extends KeyAdapter {
-	private Map<Integer, Command> commandMap = new HashMap<>();
+	Map<Integer, Command> commandMap = new HashMap<>();
 
 	public KeyController(Map<Integer, Command> commandMap) {
 		this.commandMap = commandMap;

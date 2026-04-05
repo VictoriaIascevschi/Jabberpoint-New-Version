@@ -16,10 +16,9 @@ class NextSlideCommandTest {
 
     @BeforeEach
     void setUp() {
-        // Use a real Presentation object
         realPresentation = new Presentation();
 
-        // Add some slides so we can test navigation
+        // Adding slides to the presentation
         Slide slide1 = new Slide();
         Slide slide2 = new Slide();
         realPresentation.append(slide1);
@@ -29,7 +28,7 @@ class NextSlideCommandTest {
     }
 
     @Test
-    void executeShouldAdvanceToNextSlide() {
+    void execute_advancesToNextSlide() {
         int initialSlide = realPresentation.getSlideNumber();
 
         nextSlideCommand.execute();
@@ -38,7 +37,7 @@ class NextSlideCommandTest {
     }
 
     @Test
-    void getPresentationShouldReturnPresentation() {
+    void getPresentation_returnsPresentation() {
         assertSame(realPresentation, nextSlideCommand.getPresentation());
     }
 }

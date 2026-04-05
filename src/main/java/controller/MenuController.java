@@ -30,6 +30,6 @@ public class MenuController extends MenuBar {
 
 		Menu helpMenu = menuBuilder.buildHelpMenu();
 		add(helpMenu);
-		setHelpMenu(helpMenu);  // Needed for portability (Motif, etc.)
+		setHelpMenu(helpMenu);
 	}
 }
