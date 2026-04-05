@@ -8,6 +8,7 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
 
@@ -30,6 +31,17 @@ jobs:
       - name: Build and Test with Maven
         run: mvn clean verify
 
+      # Package the application
+      - name: Package JAR
+        run: mvn package -DskipTests
+
+      # Store artifact
+      - name: Upload JAR artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-jar
+          path: target/*.jar
+
       - name: Generate image tag
         id: meta
         run: echo "image_tag=${GITHUB_SHA}" >> $GITHUB_OUTPUT
@@ -41,8 +53,13 @@ jobs:
     environment: development
 
     steps:
-      - name: Deploy to Development
-        run: echo "Deploying ${{ needs.build.outputs.image_tag }} to DEV"
+      - name: Download JAR
+        uses: actions/download-artifact@v4
+        with:
+          name: app-jar
+
+      - name: Run application
+        run: java -jar *.jar &
 
   deploy-test:
     if: github.ref == 'refs/heads/develop'
@@ -51,8 +68,13 @@ jobs:
     environment: test
 
     steps:
-      - name: Deploy to Test
-        run: echo "Deploying ${{ needs.build.outputs.image_tag }} to TEST"
+      - name: Download JAR
+        uses: actions/download-artifact@v4
+        with:
+          name: app-jar
+
+      - name: Run application
+        run: java -jar *.jar &
 
   deploy-acceptance:
     if: github.ref == 'refs/heads/develop'
@@ -61,8 +83,13 @@ jobs:
     environment: acceptance
 
     steps:
-      - name: Deploy to Acceptance
-        run: echo "Deploying ${{ needs.build.outputs.image_tag }} to ACCEPTANCE"
+      - name: Download JAR
+        uses: actions/download-artifact@v4
+        with:
+          name: app-jar
+
+      - name: Run application
+        run: java -jar *.jar &
 
   deploy-production:
     if: github.ref == 'refs/heads/main'
@@ -72,5 +99,10 @@ jobs:
       name: production
 
     steps:
-      - name: Deploy to Production
-        run: echo "Deploying ${{ needs.build.outputs.image_tag }} to PRODUCTION"
+      - name: Download JAR
+        uses: actions/download-artifact@v4
+        with:
+          name: app-jar
+
+      - name: Run application
+        run: java -jar *.jar &

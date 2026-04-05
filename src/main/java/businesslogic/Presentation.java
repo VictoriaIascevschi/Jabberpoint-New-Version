@@ -1,7 +1,6 @@
 package businesslogic;
 
 import io.Accessor;
-import ui.SlideViewerComponent;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -21,7 +20,6 @@ public class Presentation
     private ArrayList<Slide> showList = null; // an ArrayList with Slides
     private ArrayList<PresentationObserver> observers;
     private Accessor accessor;
-    private SlideViewerComponent slideViewComponent;
 
     public Presentation()
     {
@@ -100,16 +98,6 @@ public class Presentation
     public void setAccessor(Accessor accessor)
     {
         this.accessor = accessor;
-    }
-
-    public SlideViewerComponent getSlideViewComponent()
-    {
-        return this.slideViewComponent;
-    }
-
-    public void setSlideViewComponent(SlideViewerComponent slideViewComponent)
-    {
-        this.slideViewComponent = slideViewComponent;
     }
 
     // go to the previous slide unless your at the beginning of the presentation
@@ -204,10 +192,5 @@ public class Presentation
         {
             observer.update(this, data);
         }
-    }
-
-    public void setShowView(SlideViewerComponent slideViewerComponent)
-    {
-        this.slideViewComponent = slideViewerComponent;
     }
 }
