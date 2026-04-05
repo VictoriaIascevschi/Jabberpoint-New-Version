@@ -1,7 +1,7 @@
-package main.java.businesslogic;
+package businesslogic;
 
-import main.java.io.Accessor;
-import main.java.ui.SlideViewerComponent;
+import io.Accessor;
+import ui.SlideViewerComponent;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -55,6 +55,16 @@ public class Presentation
     {
         this.currentSlideNumber = number;
         this.notifyObservers();
+    }
+
+    public ArrayList<PresentationObserver> getObservers()
+    {
+        return this.observers;
+    }
+
+    public void setObservers(ArrayList<PresentationObserver> observers)
+    {
+        this.observers = observers;
     }
 
     // go to the previous slide unless your at the beginning of the presentation
@@ -120,6 +130,11 @@ public class Presentation
 
     public void removeObserver(PresentationObserver observer)
     {
+        if(this.getObservers().size() == 1)
+        {
+            this.observers.remove(observer);
+        }
+
         Iterator<PresentationObserver> it = this.observers.iterator();
         while (it.hasNext())
         {

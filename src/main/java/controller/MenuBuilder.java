@@ -1,11 +1,12 @@
-package main.java.controller;
+package controller;
 
-import main.java.controller.command.Command;
+import controller.command.Command;
 
 import java.awt.*;
 import java.util.Map;
 
-import static main.java.controller.MenuConstants.*;
+import static controller.MenuConstants.FILE;
+import static controller.MenuConstants.*;
 
 public class MenuBuilder {
     private Frame parent;

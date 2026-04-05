@@ -1,6 +1,6 @@
-package main.java.controller;
+package controller;
 
-import main.java.controller.command.Command;
+import controller.command.Command;
 
 import java.awt.MenuBar;
 import java.awt.Frame;
@@ -30,6 +30,6 @@ public class MenuController extends MenuBar {
 
 		Menu helpMenu = menuBuilder.buildHelpMenu();
 		add(helpMenu);
-		setHelpMenu(helpMenu);  // Needed for portability (Motif, etc.)
+		setHelpMenu(helpMenu);
 	}
 }
