@@ -2,7 +2,9 @@ package businesslogic;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ui.SlideViewerComponent;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -123,6 +125,43 @@ class PresentationTest
         assertEquals(currentSlide, slideAfterUpdate);
     }
 
+
+    @Test
+    void clear()
+    {
+        presentation.clear();
+        ArrayList<Slide> emptyArray = new ArrayList<Slide>();
+        assertEquals(-1, presentation.getSlideNumber());
+        assertEquals(emptyArray, presentation.getShowList());
+    }
+
+    @Test
+    void append()
+    {
+        Slide newSlide = new Slide();
+        assertFalse(presentation.getShowList().contains(newSlide));
+        presentation.append(newSlide);
+        assertTrue(presentation.getShowList().contains(newSlide));
+    }
+
+    @Test
+    void addObserver()
+    {
+        PresentationObserver newObserver = createDummyObserver();
+        assertFalse(presentation.getObservers().contains(newObserver));
+        presentation.addObserver(newObserver);
+        assertTrue(presentation.getObservers().contains(newObserver));
+
+    }
+
+    @Test
+    void setShowView()
+    {
+        SlideViewerComponent slideViewerComponent = new SlideViewerComponent(presentation, null);
+        presentation.setShowView(slideViewerComponent);
+        assertEquals(slideViewerComponent, presentation.getSlideViewComponent());
+    }
+
     private PresentationObserver createDummyObserver()
     {
         return (presentation, data) ->
@@ -130,6 +169,7 @@ class PresentationTest
             // no-op observer used for list-management tests
         };
     }
+
 
     private static class CapturingObserver implements PresentationObserver
     {

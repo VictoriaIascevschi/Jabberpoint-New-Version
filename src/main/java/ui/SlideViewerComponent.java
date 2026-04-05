@@ -36,6 +36,15 @@ public class SlideViewerComponent extends JComponent implements PresentationObse
 	private static final int YPOS = 20;
 	private JFrame frame = null;
 
+    public SlideViewerComponent(Presentation presentation, JFrame frame)
+    {
+        setBackground(BGCOLOR);
+        this.presentation = presentation;
+        this.slide = presentation.getCurrentSlide();
+        labelFont = new Font(FONTNAME, FONTSTYLE, FONTHEIGHT);
+        this.frame = frame;
+    }
+
     public Presentation getPresentation()
     {
         return this.presentation;
@@ -76,15 +85,6 @@ public class SlideViewerComponent extends JComponent implements PresentationObse
         this.frame = frame;
     }
 
-    public SlideViewerComponent(Presentation presentation, JFrame frame)
-	{
-		setBackground(BGCOLOR);
-		this.presentation = presentation;
-        this.slide = presentation.getCurrentSlide();
-		labelFont = new Font(FONTNAME, FONTSTYLE, FONTHEIGHT);
-		this.frame = frame;
-	}
-
     public Dimension getPreferredSize()
     {
         return new Dimension(Slide.WIDTH, Slide.HEIGHT);
@@ -95,14 +95,17 @@ public class SlideViewerComponent extends JComponent implements PresentationObse
     {
         graphics.setColor(BGCOLOR);
         graphics.fillRect(0, 0, getSize().width, getSize().height);
+
         if (presentation.getSlideNumber() < 0 || slide == null)
         {
             return;
         }
+
         graphics.setFont(labelFont);
         graphics.setColor(COLOR);
         graphics.drawString("Slide " + (1 + presentation.getSlideNumber()) + " of " +
                 presentation.getSize(), XPOS, YPOS);
+
         Rectangle area = new Rectangle(0, YPOS, getWidth(), (getHeight() - YPOS));
         slide.draw(graphics, area, this);
     }
@@ -113,10 +116,18 @@ public class SlideViewerComponent extends JComponent implements PresentationObse
         if (data == null)
         {
             repaint();
+
             return;
         }
+
         this.slide = data;
+        
         repaint();
-        frame.setTitle(presentation.getTitle());
+
+        if (frame != null)
+        {
+            frame.setTitle(presentation.getTitle());
+        }
+
     }
 }

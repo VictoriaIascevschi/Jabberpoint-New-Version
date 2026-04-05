@@ -8,16 +8,19 @@ public class SlideItemFactory
     public SlideItem createSlideItem(int level, String content)
     {
         String safeContent = content == null ? "" : content;
+
         return new TextItem(level, safeContent);
     }
 
     public SlideItem createSlideItem(String type, int level, String content)
     {
         String safeContent = content == null ? "" : content;
+
         if (TEXT.equalsIgnoreCase(type))
         {
             return new TextItem(level, safeContent);
         }
+        
         if (IMAGE.equalsIgnoreCase(type))
         {
             return new BitmapItem(level, safeContent);

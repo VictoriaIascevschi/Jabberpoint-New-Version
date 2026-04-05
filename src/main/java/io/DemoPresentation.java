@@ -17,9 +17,11 @@ class DemoPresentation extends Accessor
     public void loadFile(Presentation presentation, String unusedFilename)
     {
         presentation.setTitle("Demo main.java.logic.Presentation");
+
         Slide slide;
         slide = new Slide();
         SlideItemFactory factory = new SlideItemFactory();
+
         slide.setTitle("main.java.app.JabberPoint");
         slide.append(factory.createSlideItem(1, "The Java main.java.logic.Presentation Tool"));
         slide.append(factory.createSlideItem(2, "Copyright (c) 1996-2000: Ian Darwin"));
@@ -31,6 +33,7 @@ class DemoPresentation extends Accessor
         slide.append(factory.createSlideItem(3, "Next slide: PgDn or Enter"));
         slide.append(factory.createSlideItem(3, "Previous slide: PgUp or up-arrow"));
         slide.append(factory.createSlideItem(3, "Quit: q or Q"));
+
         presentation.append(slide);
 
         slide = new Slide();
@@ -42,6 +45,7 @@ class DemoPresentation extends Accessor
         slide.append(factory.createSlideItem(2, "Level 2 has style number  2"));
         slide.append(factory.createSlideItem(3, "This is how level 3 looks like"));
         slide.append(factory.createSlideItem(4, "And this is level 4"));
+
         presentation.append(slide);
 
         slide = new Slide();
@@ -50,6 +54,7 @@ class DemoPresentation extends Accessor
         slide.append(factory.createSlideItem(2, "use File->Open from the menu."));
         slide.append(factory.createSlideItem(1, " "));
         slide.append(factory.createSlideItem(1, "This is the end of the presentation."));
+
         SlideItemFactory slideItemFactory = new SlideItemFactory();
 
         slide.append(slideItemFactory.createSlideItem("image", 1, "resources/serclogo_fc.jpg"));
