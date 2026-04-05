@@ -1,7 +1,6 @@
 package controller.command;
 
 import businesslogic.Presentation;
-import businesslogic.testable.TestableFrame;
 import businesslogic.testable.TestablePresentation;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -15,12 +14,12 @@ class NewPresentationCommandTest {
 
     private NewPresentationCommand command;
     private TestablePresentation presentation;
-    private TestableFrame parent;
+    private Frame parent;
 
     @BeforeEach
     void setUp() {
         presentation = new TestablePresentation();
-        parent = new TestableFrame();
+        parent = null;
         command = new NewPresentationCommand(presentation, parent);
     }
 
@@ -58,12 +57,12 @@ class NewPresentationCommandTest {
     }
 
     @Test
-    void execute_whenCalled_callsRepaintOnParent() {
+    void execute_whenCalled_doesNotCallExit() {
         // Act
         command.execute();
 
         // Assert
-        assertTrue(parent.wasRepaintCalled());
+        assertFalse(presentation.wasExitCalled());
     }
 
     @Test
@@ -73,15 +72,6 @@ class NewPresentationCommandTest {
 
         // Assert
         assertEquals(1, presentation.getClearCallCount());
-    }
-
-    @Test
-    void execute_whenCalled_callsRepaintExactlyOnce() {
-        // Act
-        command.execute();
-
-        // Assert
-        assertEquals(1, parent.getRepaintCallCount());
     }
 
     @Test
@@ -96,13 +86,18 @@ class NewPresentationCommandTest {
     }
 
     @Test
-    void execute_whenCalledMultipleTimes_callsRepaintMultipleTimes() {
+    void execute_whenCalledMultipleTimes_doesNotCallExit() {
         // Act
         command.execute();
         command.execute();
         command.execute();
 
         // Assert
-        assertEquals(3, parent.getRepaintCallCount());
+        assertFalse(presentation.wasExitCalled());
+    }
+
+    @Test
+    void execute_whenParentIsNull_doesNotThrow() {
+        assertDoesNotThrow(() -> command.execute());
     }
 }

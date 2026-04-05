@@ -2,9 +2,7 @@ package businesslogic;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ui.SlideViewerComponent;
 
-import javax.swing.*;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,7 +13,6 @@ class PresentationTest
     Slide slide1;
     Slide slide2;
     Slide slide3;
-    SlideViewerComponent observer;
 
     @BeforeEach
     void setUp()
@@ -24,8 +21,6 @@ class PresentationTest
         slide1 = new Slide();
         slide2 = new Slide();
         slide3 = new Slide();
-        JFrame jframe = new JFrame();
-        observer = new SlideViewerComponent(presentation, jframe);
         presentation.append(slide1);
         presentation.append(slide2);
         presentation.append(slide3);
@@ -98,6 +93,7 @@ class PresentationTest
     @Test
     void removeObserver_whenObserversStartsEmpty_shouldReturnToDefault()
     {
+        PresentationObserver observer = createDummyObserver();
         ArrayList<PresentationObserver> observersBeforeAdding = presentation.getObservers();
         presentation.addObserver(observer);
         presentation.removeObserver(observer);
@@ -107,6 +103,7 @@ class PresentationTest
     @Test
     void removeObserver_whenObserversStartWith1Observer_shouldReturnToDefault()
     {
+        PresentationObserver observer = createDummyObserver();
         PresentationObserver observerDefault = observer;
         presentation.addObserver(observerDefault);
         ArrayList<PresentationObserver> observersBeforeAdding = presentation.getObservers();
@@ -118,10 +115,29 @@ class PresentationTest
     @Test
     void notifyObservers()
     {
+        CapturingObserver observer = new CapturingObserver();
         presentation.addObserver(observer);
         presentation.nextSlide();
-        Slide slideAfterUpdate = observer.getSlide();
+        Slide slideAfterUpdate = observer.slide;
         Slide currentSlide = presentation.getCurrentSlide();
         assertEquals(currentSlide, slideAfterUpdate);
+    }
+
+    private PresentationObserver createDummyObserver()
+    {
+        return (presentation, data) -> {
+            // no-op observer used for list-management tests
+        };
+    }
+
+    private static class CapturingObserver implements PresentationObserver
+    {
+        private Slide slide;
+
+        @Override
+        public void update(Presentation presentation, Slide data)
+        {
+            this.slide = data;
+        }
     }
 }

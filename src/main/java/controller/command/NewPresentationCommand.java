@@ -24,6 +24,8 @@ public class NewPresentationCommand implements Command {
     @Override
     public void execute() {
         presentation.clear();
-        parent.repaint();
+        if (parent != null) {
+            parent.repaint();
+        }
     }
 }

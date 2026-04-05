@@ -5,6 +5,7 @@ import controller.command.testable.TestableCommand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.awt.Canvas;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,8 +44,7 @@ class KeyControllerTest {
         // Arrange
         int keyCode = KeyEvent.VK_ENTER;
         commandMap.put(keyCode, mockCommand);
-        KeyEvent keyEvent = new KeyEvent(new java.awt.Frame(), KeyEvent.KEY_PRESSED,
-                System.currentTimeMillis(), 0, keyCode, ' ');
+        KeyEvent keyEvent = createKeyPressedEvent(keyCode);
 
         // Act
         keyController.keyPressed(keyEvent);
@@ -58,8 +58,7 @@ class KeyControllerTest {
         // Arrange
         int keyCode = KeyEvent.VK_ENTER;
         commandMap.put(keyCode, mockCommand);
-        KeyEvent keyEvent = new KeyEvent(new java.awt.Frame(), KeyEvent.KEY_PRESSED,
-                System.currentTimeMillis(), 0, keyCode, ' ');
+        KeyEvent keyEvent = createKeyPressedEvent(keyCode);
 
         // Act
         keyController.keyPressed(keyEvent);
@@ -73,8 +72,7 @@ class KeyControllerTest {
         // Arrange
         int keyCode = KeyEvent.VK_ENTER;
         // commandMap is empty
-        KeyEvent keyEvent = new KeyEvent(new java.awt.Frame(), KeyEvent.KEY_PRESSED,
-                System.currentTimeMillis(), 0, keyCode, ' ');
+        KeyEvent keyEvent = createKeyPressedEvent(keyCode);
 
         // Act
         keyController.keyPressed(keyEvent);
@@ -90,8 +88,7 @@ class KeyControllerTest {
         int spaceKeyCode = KeyEvent.VK_SPACE;
         commandMap.put(enterKeyCode, mockCommand);
         commandMap.put(spaceKeyCode, anotherCommand);
-        KeyEvent keyEvent = new KeyEvent(new java.awt.Frame(), KeyEvent.KEY_PRESSED,
-                System.currentTimeMillis(), 0, enterKeyCode, ' ');
+        KeyEvent keyEvent = createKeyPressedEvent(enterKeyCode);
 
         // Act
         keyController.keyPressed(keyEvent);
@@ -107,8 +104,7 @@ class KeyControllerTest {
         int spaceKeyCode = KeyEvent.VK_SPACE;
         commandMap.put(enterKeyCode, mockCommand);
         commandMap.put(spaceKeyCode, anotherCommand);
-        KeyEvent keyEvent = new KeyEvent(new java.awt.Frame(), KeyEvent.KEY_PRESSED,
-                System.currentTimeMillis(), 0, enterKeyCode, ' ');
+        KeyEvent keyEvent = createKeyPressedEvent(enterKeyCode);
 
         // Act
         keyController.keyPressed(keyEvent);
@@ -125,10 +121,8 @@ class KeyControllerTest {
         commandMap.put(enterKeyCode, mockCommand);
         commandMap.put(spaceKeyCode, anotherCommand);
 
-        KeyEvent enterEvent = new KeyEvent(new java.awt.Frame(), KeyEvent.KEY_PRESSED,
-                System.currentTimeMillis(), 0, enterKeyCode, ' ');
-        KeyEvent spaceEvent = new KeyEvent(new java.awt.Frame(), KeyEvent.KEY_PRESSED,
-                System.currentTimeMillis(), 0, spaceKeyCode, ' ');
+        KeyEvent enterEvent = createKeyPressedEvent(enterKeyCode);
+        KeyEvent spaceEvent = createKeyPressedEvent(spaceKeyCode);
 
         // Act
         keyController.keyPressed(enterEvent);
@@ -145,8 +139,7 @@ class KeyControllerTest {
         commandMap.put(enterKeyCode, mockCommand);
         commandMap.put(spaceKeyCode, anotherCommand);
 
-        KeyEvent spaceEvent = new KeyEvent(new java.awt.Frame(), KeyEvent.KEY_PRESSED,
-                System.currentTimeMillis(), 0, spaceKeyCode, ' ');
+        KeyEvent spaceEvent = createKeyPressedEvent(spaceKeyCode);
 
         // Act
         keyController.keyPressed(spaceEvent);
@@ -160,8 +153,7 @@ class KeyControllerTest {
         // Arrange
         int keyCode = KeyEvent.VK_ENTER;
         commandMap.put(keyCode, null);
-        KeyEvent keyEvent = new KeyEvent(new java.awt.Frame(), KeyEvent.KEY_PRESSED,
-                System.currentTimeMillis(), 0, keyCode, ' ');
+        KeyEvent keyEvent = createKeyPressedEvent(keyCode);
 
         // Act and Assert
         assertDoesNotThrow(() -> keyController.keyPressed(keyEvent));
@@ -172,13 +164,16 @@ class KeyControllerTest {
         // Arrange
         int keyCode = KeyEvent.VK_ENTER;
         commandMap.put(keyCode, mockCommand);
-        KeyEvent keyEvent = new KeyEvent(new java.awt.Frame(), KeyEvent.KEY_PRESSED,
-                System.currentTimeMillis(), 0, keyCode, ' ');
+        KeyEvent keyEvent = createKeyPressedEvent(keyCode);
 
         // Act
         keyController.keyPressed(keyEvent);
 
         // Assert
         assertTrue(mockCommand.wasExecuted());
+    }
+
+    private KeyEvent createKeyPressedEvent(int keyCode) {
+        return new KeyEvent(new Canvas(), KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, keyCode, ' ');
     }
 }
