@@ -36,6 +36,15 @@ public class SlideViewerComponent extends JComponent implements PresentationObse
 	private static final int YPOS = 20;
 	private JFrame frame = null;
 
+    public SlideViewerComponent(Presentation presentation, JFrame frame)
+    {
+        setBackground(BGCOLOR);
+        this.presentation = presentation;
+        this.slide = presentation.getCurrentSlide();
+        labelFont = new Font(FONTNAME, FONTSTYLE, FONTHEIGHT);
+        this.frame = frame;
+    }
+
     public Presentation getPresentation()
     {
         return this.presentation;
@@ -76,15 +85,6 @@ public class SlideViewerComponent extends JComponent implements PresentationObse
         this.frame = frame;
     }
 
-    public SlideViewerComponent(Presentation presentation, JFrame frame)
-	{
-		setBackground(BGCOLOR);
-		this.presentation = presentation;
-        this.slide = presentation.getCurrentSlide();
-		labelFont = new Font(FONTNAME, FONTSTYLE, FONTHEIGHT);
-		this.frame = frame;
-	}
-
     public Dimension getPreferredSize()
     {
         return new Dimension(Slide.WIDTH, Slide.HEIGHT);
@@ -117,6 +117,11 @@ public class SlideViewerComponent extends JComponent implements PresentationObse
         }
         this.slide = data;
         repaint();
-        frame.setTitle(presentation.getTitle());
+
+        if (frame != null)
+        {
+            frame.setTitle(presentation.getTitle());
+        }
+
     }
 }
