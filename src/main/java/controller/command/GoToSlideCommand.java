@@ -37,8 +37,21 @@ public class GoToSlideCommand implements Command
             try
             {
                 int pageNumber = Integer.parseInt(pageNumberStr);
-                presentation.setSlideNumber(pageNumber - 1);
-            } catch (NumberFormatException e)
+                int slideIndex = pageNumber - 1;
+                int totalSlides = presentation.getSize();
+
+                if (slideIndex >= 0 && slideIndex < totalSlides)
+                {
+                    presentation.setSlideNumber(slideIndex);
+                } else
+                {
+                    JOptionPane.showMessageDialog(parent,
+                            "Page number must be between 1 and " + totalSlides,
+                            "Invalid Page Number",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
+            catch (NumberFormatException e)
             {
                 JOptionPane.showMessageDialog(parent,
                         "Invalid page number",
