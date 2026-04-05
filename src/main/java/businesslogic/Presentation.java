@@ -21,7 +21,6 @@ public class Presentation
     private ArrayList<Slide> showList = null; // an ArrayList with Slides
     private ArrayList<PresentationObserver> observers;
     private Accessor accessor;
-    private SlideViewerComponent slideViewComponent;
 
     public Presentation()
     {
@@ -153,10 +152,5 @@ public class Presentation
         {
             observer.update(this, data);
         }
-    }
-
-    public void setShowView(SlideViewerComponent slideViewerComponent)
-    {
-        this.slideViewComponent = slideViewerComponent;
     }
 }
