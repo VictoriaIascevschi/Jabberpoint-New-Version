@@ -62,19 +62,24 @@ public class TextItem extends SlideItem
     {
         List<TextLayout> layouts = getLayouts(g, myStyle, scale);
         int xsize = 0, ysize = (int) (myStyle.getLeading() * scale);
+
         Iterator<TextLayout> iterator = layouts.iterator();
+
         while (iterator.hasNext())
         {
             TextLayout layout = iterator.next();
             Rectangle2D bounds = layout.getBounds();
+
             if (bounds.getWidth() > xsize)
             {
                 xsize = (int) bounds.getWidth();
             }
+
             if (bounds.getHeight() > 0)
             {
                 ysize += bounds.getHeight();
             }
+
             ysize += layout.getLeading() + layout.getDescent();
         }
 
@@ -89,12 +94,16 @@ public class TextItem extends SlideItem
         {
             return;
         }
+
         List<TextLayout> layouts = getLayouts(g, myStyle, scale);
+
         Point pen = new Point(x + (int) (myStyle.getIndent() * scale),
                 y + (int) (myStyle.getLeading() * scale));
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(myStyle.getColor());
+
         Iterator<TextLayout> it = layouts.iterator();
+
         while (it.hasNext())
         {
             TextLayout layout = it.next();
@@ -107,11 +116,13 @@ public class TextItem extends SlideItem
     private List<TextLayout> getLayouts(Graphics g, Style s, float scale)
     {
         List<TextLayout> layouts = new ArrayList<TextLayout>();
+
         AttributedString attrStr = getAttributedString(s, scale);
         Graphics2D g2d = (Graphics2D) g;
         FontRenderContext frc = g2d.getFontRenderContext();
         LineBreakMeasurer measurer = new LineBreakMeasurer(attrStr.getIterator(), frc);
         float wrappingWidth = (Slide.WIDTH - s.getIndent()) * scale;
+        
         while (measurer.getPosition() < getText().length())
         {
             TextLayout layout = measurer.nextLayout(wrappingWidth);

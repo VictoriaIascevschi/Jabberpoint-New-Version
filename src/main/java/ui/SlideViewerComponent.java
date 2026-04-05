@@ -95,14 +95,17 @@ public class SlideViewerComponent extends JComponent implements PresentationObse
     {
         graphics.setColor(BGCOLOR);
         graphics.fillRect(0, 0, getSize().width, getSize().height);
+
         if (presentation.getSlideNumber() < 0 || slide == null)
         {
             return;
         }
+
         graphics.setFont(labelFont);
         graphics.setColor(COLOR);
         graphics.drawString("Slide " + (1 + presentation.getSlideNumber()) + " of " +
                 presentation.getSize(), XPOS, YPOS);
+
         Rectangle area = new Rectangle(0, YPOS, getWidth(), (getHeight() - YPOS));
         slide.draw(graphics, area, this);
     }
@@ -113,9 +116,12 @@ public class SlideViewerComponent extends JComponent implements PresentationObse
         if (data == null)
         {
             repaint();
+
             return;
         }
+
         this.slide = data;
+        
         repaint();
 
         if (frame != null)

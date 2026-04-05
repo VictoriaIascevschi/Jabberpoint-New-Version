@@ -119,6 +119,7 @@ public class Presentation
         {
             this.setSlideNumber(this.currentSlideNumber - 1);
         }
+        
         this.notifyObservers();
     }
 
@@ -129,6 +130,7 @@ public class Presentation
         {
             this.setSlideNumber(this.currentSlideNumber + 1);
         }
+
         this.notifyObservers();
     }
 
@@ -136,6 +138,7 @@ public class Presentation
     public void clear()
     {
         this.showList = new ArrayList<Slide>();
+
         this.setSlideNumber(-1);
         this.notifyObservers();
     }
@@ -175,15 +178,17 @@ public class Presentation
 
     public void removeObserver(PresentationObserver observer)
     {
-        if(this.getObservers().size() == 1)
+        if (this.getObservers().size() == 1)
         {
             this.observers.remove(observer);
         }
 
         Iterator<PresentationObserver> it = this.observers.iterator();
+
         while (it.hasNext())
         {
             PresentationObserver next = it.next();
+
             if (next.equals(observer))
             {
                 it.remove();
@@ -194,6 +199,7 @@ public class Presentation
     public void notifyObservers()
     {
         Slide data = this.getSlide(this.currentSlideNumber);
+
         for (PresentationObserver observer : this.observers)
         {
             observer.update(this, data);

@@ -82,6 +82,7 @@ public class XMLAccessor extends Accessor
 
             NodeList slides = doc.getElementsByTagName(SLIDE);
             max = slides.getLength();
+
             for (slideNumber = 0; slideNumber < max; slideNumber++)
             {
                 Element xmlSlide = (Element) slides.item(slideNumber);
