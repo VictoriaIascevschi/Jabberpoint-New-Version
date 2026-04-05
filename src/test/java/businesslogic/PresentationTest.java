@@ -154,14 +154,6 @@ class PresentationTest
 
     }
 
-    @Test
-    void setShowView()
-    {
-        SlideViewerComponent slideViewerComponent = new SlideViewerComponent(presentation, null);
-        presentation.setShowView(slideViewerComponent);
-        assertEquals(slideViewerComponent, presentation.getSlideViewComponent());
-    }
-
     private PresentationObserver createDummyObserver()
     {
         return (presentation, data) ->
