@@ -8,6 +8,7 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
 
@@ -30,16 +31,20 @@ jobs:
       - name: Build and Test with Maven
         run: mvn clean verify
 
-      - name: Generate JAR version
-        id: jar_version
-        run: echo "version=${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
+      # Package the application
+      - name: Package JAR
+        run: mvn package -DskipTests
 
+      # Store artifact
       - name: Upload JAR artifact
         uses: actions/upload-artifact@v4
         with:
-          name: application-jar
+          name: app-jar
           path: target/*.jar
-          retention-days: 30
+
+      - name: Generate image tag
+        id: meta
+        run: echo "image_tag=${GITHUB_SHA}" >> $GITHUB_OUTPUT
 
   deploy-dev:
     if: github.ref == 'refs/heads/develop'
@@ -48,14 +53,13 @@ jobs:
     environment: development
 
     steps:
-      - name: Download JAR artifact
+      - name: Download JAR
         uses: actions/download-artifact@v4
         with:
-          name: application-jar
-          path: ./artifact
+          name: app-jar
 
-      - name: Deploy to Development
-        run: echo "Deploying JAR version ${{ needs.build.outputs.jar_version }} to DEV"
+      - name: Run application
+        run: java -jar *.jar &
 
   deploy-test:
     if: github.ref == 'refs/heads/develop'
@@ -64,15 +68,13 @@ jobs:
     environment: test
 
     steps:
-      - name: Download JAR artifact
+      - name: Download JAR
         uses: actions/download-artifact@v4
         with:
-          name: application-jar
-          path: ./artifact
+          name: app-jar
 
-      - name: Deploy to Test
-        run: |
-          echo "Deploying JAR version ${{ needs.build.outputs.jar_version }} to TEST"
+      - name: Run application
+        run: java -jar *.jar &
 
   deploy-acceptance:
     if: github.ref == 'refs/heads/develop'
@@ -81,14 +83,13 @@ jobs:
     environment: acceptance
 
     steps:
-      - name: Download JAR artifact
+      - name: Download JAR
         uses: actions/download-artifact@v4
         with:
-          name: application-jar
-          path: ./artifact
+          name: app-jar
 
-      - name: Deploy to Acceptance
-        run: echo "Deploying JAR version ${{ needs.build.outputs.jar_version }} to ACCEPTANCE"
+      - name: Run application
+        run: java -jar *.jar &
 
   deploy-production:
     if: github.ref == 'refs/heads/main'
@@ -98,11 +99,10 @@ jobs:
       name: production
 
     steps:
-      - name: Download JAR artifact
+      - name: Download JAR
         uses: actions/download-artifact@v4
         with:
-          name: application-jar
-          path: ./artifact
+          name: app-jar
 
-      - name: Deploy to Production
-        run: echo "Deploying JAR version ${{ needs.build.outputs.jar_version }} to PRODUCTION"
+      - name: Run application
+        run: java -jar *.jar &
