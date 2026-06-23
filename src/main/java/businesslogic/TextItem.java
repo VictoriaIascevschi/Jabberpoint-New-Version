@@ -47,6 +47,16 @@ public class TextItem extends SlideItem
         return text == null ? "" : text;
     }
 
+    public String getType()
+    {
+        return "text";
+    }
+
+    public String getContent()
+    {
+        return getText();
+    }
+
     // geef de AttributedString voor het item
     public AttributedString getAttributedString(Style style, float scale)
     {

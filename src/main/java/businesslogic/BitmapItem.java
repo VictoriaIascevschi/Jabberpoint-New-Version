@@ -50,6 +50,16 @@ public class BitmapItem extends SlideItem
         return imageName;
     }
 
+    public String getType()
+    {
+        return "image";
+    }
+
+    public String getContent()
+    {
+        return getName();
+    }
+
     // give the  bounding box of the image
     public Rectangle getBoundingBox(Graphics g, ImageObserver observer, float scale, Style myStyle)
     {

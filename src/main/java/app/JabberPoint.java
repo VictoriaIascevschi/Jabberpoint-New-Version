@@ -3,8 +3,8 @@ package app;
 import businesslogic.Style;
 import businesslogic.Presentation;
 import ui.SlideViewerFrame;
+import io.AccessorFactory;
 import io.Accessor;
-import io.XMLAccessor;
 
 import javax.swing.JOptionPane;
 
@@ -36,13 +36,14 @@ public class JabberPoint
         new SlideViewerFrame(JABVERSION, presentation);
         try
         {
+            AccessorFactory accessorFactory = new AccessorFactory();
             if (argv.length == 0)
             { // een demo presentatie
                 Accessor.getDemoAccessor().loadFile(presentation, "");
             }
             else
             {
-                new XMLAccessor().loadFile(presentation, argv[0]);
+                accessorFactory.createReader(argv[0]).loadFile(presentation, argv[0]);
             }
             presentation.setSlideNumber(0);
         }

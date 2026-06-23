@@ -4,6 +4,7 @@ import controller.command.*;
 import businesslogic.Presentation;
 import controller.KeyController;
 import controller.MenuController;
+import io.AccessorFactory;
 
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
@@ -65,9 +66,10 @@ public class SlideViewerFrame extends JFrame
 
 		// Adding all menu commands to a map, linking each menu item to a certain command
 		Map<String, Command> menuCommandMap = new HashMap<>();
-		menuCommandMap.put(OPEN, new OpenCommand(presentation, this));
+		AccessorFactory accessorFactory = new AccessorFactory();
+		menuCommandMap.put(OPEN, new OpenCommand(presentation, this, accessorFactory));
 		menuCommandMap.put(NEW, new NewPresentationCommand(presentation, this));
-		menuCommandMap.put(SAVE, new SaveCommand(presentation, this));
+		menuCommandMap.put(SAVE, new SaveCommand(presentation, this, accessorFactory));
 		menuCommandMap.put(EXIT, new ExitCommand(presentation));
 		menuCommandMap.put(NEXT, new NextSlideCommand(presentation));
 		menuCommandMap.put(PREV, new PreviousSlideCommand(presentation));
