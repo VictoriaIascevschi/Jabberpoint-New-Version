@@ -4,7 +4,6 @@ import businesslogic.Presentation;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class DemoPresentationTest
 {
@@ -41,12 +40,4 @@ class DemoPresentationTest
         assertEquals("main.java.app.JabberPoint", presentation.getSlide(0).getTitle());
     }
 
-    @Test
-    void saveFile_whenCalled_throwsIllegalStateException()
-    {
-        DemoPresentation demoPresentation = new DemoPresentation();
-        Presentation presentation = new Presentation();
-
-        assertThrows(IllegalStateException.class, () -> demoPresentation.saveFile(presentation, ""));
-    }
 }

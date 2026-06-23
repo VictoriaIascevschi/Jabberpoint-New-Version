@@ -1,35 +1,25 @@
 package io;
 
-import businesslogic.Presentation;
-
-import java.io.IOException;
-
 /**
- * <p>Een main.java.io.Accessor maakt het mogelijk om gegevens voor een presentatie
- * te lezen of te schrijven.</p>
- * <p>Niet-abstracte subklassen moeten de load en de save methode implementeren.</p>
+ * <p>Holds shared accessor constants and factories.</p>
+ * <p>Use ReadAccessor and WriteAccessor for loading and saving behaviour.</p>
  *
  * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman
  * @version 1.6 2014/05/16 Sylvia Stuurman
  */
 
-public abstract class Accessor
+public final class Accessor
 {
     public static final String DEMO_NAME = "Demonstration presentation";
     public static final String DEFAULT_EXTENSION = ".xml";
 
-	public Accessor()
+	private Accessor()
 	{
 
 	}
 
-    public static Accessor getDemoAccessor()
+    public static ReadAccessor getDemoAccessor()
     {
         return new DemoPresentation();
     }
-
-    abstract public void loadFile(Presentation p, String fn) throws IOException;
-
-    abstract public void saveFile(Presentation p, String fn) throws IOException;
-
 }

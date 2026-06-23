@@ -1,7 +1,7 @@
 package controller.command;
 
-import io.Accessor;
-import io.XMLAccessor;
+import io.AccessorFactory;
+import io.WriteAccessor;
 import businesslogic.Presentation;
 
 import javax.swing.*;
@@ -14,11 +14,18 @@ public class SaveCommand implements Command
 {
     private Presentation presentation;
     private Frame parent;
+    private AccessorFactory accessorFactory;
 
     public SaveCommand(Presentation presentation, Frame parent)
     {
+        this(presentation, parent, new AccessorFactory());
+    }
+
+    public SaveCommand(Presentation presentation, Frame parent, AccessorFactory accessorFactory)
+    {
         this.presentation = presentation;
         this.parent = parent;
+        this.accessorFactory = accessorFactory;
     }
 
     public Presentation getPresentation()
@@ -89,8 +96,6 @@ public class SaveCommand implements Command
     @Override
     public void execute()
     {
-        Accessor xmlAccessor = new XMLAccessor();
-
         String fullPath = getFullPath();
 
         if (fullPath == null)
@@ -100,7 +105,8 @@ public class SaveCommand implements Command
 
         try
         {
-            xmlAccessor.saveFile(presentation, fullPath);
+            WriteAccessor writeAccessor = accessorFactory.createWriter(fullPath);
+            writeAccessor.saveFile(presentation, fullPath);
             showSuccessMessage();
         } catch (IOException exc)
         {

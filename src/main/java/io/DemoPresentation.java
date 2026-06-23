@@ -11,7 +11,7 @@ import businesslogic.SlideItemFactory;
  * @version 1.6 2014/05/16 Sylvia Stuurman
  */
 
-class DemoPresentation extends Accessor
+class DemoPresentation implements ReadAccessor
 {
 
     public void loadFile(Presentation presentation, String unusedFilename)
@@ -61,10 +61,5 @@ class DemoPresentation extends Accessor
         slide.append(slideItemFactory.createSlideItem("text", 1, "Some text"));
 
         presentation.append(slide);
-    }
-
-    public void saveFile(Presentation presentation, String unusedFilename) throws IllegalArgumentException
-    {
-        throw new IllegalStateException("Save As->Demo! called");
     }
 }

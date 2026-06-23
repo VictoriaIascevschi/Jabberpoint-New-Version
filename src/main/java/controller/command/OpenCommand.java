@@ -1,7 +1,7 @@
 package controller.command;
 
-import io.Accessor;
-import io.XMLAccessor;
+import io.ReadAccessor;
+import io.AccessorFactory;
 import businesslogic.Presentation;
 
 import javax.swing.*;
@@ -12,12 +12,18 @@ public class OpenCommand implements Command
 {
     private Presentation presentation;
     private Frame parent;
-    ;
+    private AccessorFactory accessorFactory;
 
     public OpenCommand(Presentation presentation, Frame parent)
     {
+        this(presentation, parent, new AccessorFactory());
+    }
+
+    public OpenCommand(Presentation presentation, Frame parent, AccessorFactory accessorFactory)
+    {
         this.presentation = presentation;
         this.parent = parent;
+        this.accessorFactory = accessorFactory;
     }
 
     public Presentation getPresentation()
@@ -74,11 +80,10 @@ public class OpenCommand implements Command
         }
 
         presentation.clear();
-        Accessor xmlAccessor = new XMLAccessor();
-
         try
         {
-            xmlAccessor.loadFile(presentation, fullPath);
+            ReadAccessor readAccessor = accessorFactory.createReader(fullPath);
+            readAccessor.loadFile(presentation, fullPath);
             presentation.setSlideNumber(0);
         } catch (IOException exc)
         {
