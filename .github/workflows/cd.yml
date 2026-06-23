@@ -1,0 +1,170 @@
+name: CD
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
+  workflow_dispatch:
+    inputs:
+      promote_to:
+        description: 'Target environment'
+        required: true
+        default: 'acceptance'
+        type: choice
+        options:
+          - acceptance
+          - production
+      run_id:
+        description: 'CI workflow run ID to promote'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  ARTIFACT_NAME: jabberpoint-jar
+
+jobs:
+  development:
+    name: Development
+    if: >
+      ${{
+        github.event_name == 'workflow_run' &&
+        github.event.workflow_run.conclusion == 'success'
+      }}
+    runs-on: ubuntu-latest
+    environment: development
+
+    steps:
+      - name: Download artifact from CI
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const run_id = context.payload.workflow_run.id;
+            const { owner, repo } = context.repo;
+
+            const artifacts = await github.rest.actions.listWorkflowRunArtifacts({
+              owner,
+              repo,
+              run_id
+            });
+
+            const artifact = artifacts.data.artifacts.find(a => a.name === process.env.ARTIFACT_NAME);
+
+            if (!artifact) {
+              core.setFailed(`Artifact '${process.env.ARTIFACT_NAME}' not found.`);
+              return;
+            }
+
+            const download = await github.rest.actions.downloadArtifact({
+              owner,
+              repo,
+              artifact_id: artifact.id,
+              archive_format: 'zip'
+            });
+
+            const fs = require('fs');
+            fs.writeFileSync('artifact.zip', Buffer.from(download.data));
+
+      - name: Deploy to development folder
+        run: |
+          mkdir -p deploy/development
+          unzip -o artifact.zip -d deploy/development
+          ls -la deploy/development
+
+  acceptance:
+    name: Acceptance
+    if: >
+      ${{
+        github.event_name == 'workflow_dispatch' &&
+        inputs.promote_to == 'acceptance'
+      }}
+    runs-on: ubuntu-latest
+    environment: acceptance
+
+    steps:
+      - name: Download selected CI artifact
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const run_id = Number('${{ inputs.run_id }}');
+            const { owner, repo } = context.repo;
+
+            const artifacts = await github.rest.actions.listWorkflowRunArtifacts({
+              owner,
+              repo,
+              run_id
+            });
+
+            const artifact = artifacts.data.artifacts.find(a => a.name === process.env.ARTIFACT_NAME);
+
+            if (!artifact) {
+              core.setFailed(`Artifact '${process.env.ARTIFACT_NAME}' not found.`);
+              return;
+            }
+
+            const download = await github.rest.actions.downloadArtifact({
+              owner,
+              repo,
+              artifact_id: artifact.id,
+              archive_format: 'zip'
+            });
+
+            const fs = require('fs');
+            fs.writeFileSync('artifact.zip', Buffer.from(download.data));
+
+      - name: Deploy to acceptance folder
+        run: |
+          mkdir -p deploy/acceptance
+          unzip -o artifact.zip -d deploy/acceptance
+          ls -la deploy/acceptance
+
+  production:
+    name: Production
+    if: >
+      ${{
+        github.event_name == 'workflow_dispatch' &&
+        inputs.promote_to == 'production'
+      }}
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Download selected CI artifact
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const run_id = Number('${{ inputs.run_id }}');
+            const { owner, repo } = context.repo;
+
+            const artifacts = await github.rest.actions.listWorkflowRunArtifacts({
+              owner,
+              repo,
+              run_id
+            });
+
+            const artifact = artifacts.data.artifacts.find(a => a.name === process.env.ARTIFACT_NAME);
+
+            if (!artifact) {
+              core.setFailed(`Artifact '${process.env.ARTIFACT_NAME}' not found.`);
+              return;
+            }
+
+            const download = await github.rest.actions.downloadArtifact({
+              owner,
+              repo,
+              artifact_id: artifact.id,
+              archive_format: 'zip'
+            });
+
+            const fs = require('fs');
+            fs.writeFileSync('artifact.zip', Buffer.from(download.data));
+
+      - name: Deploy to production folder
+        run: |
+          mkdir -p deploy/production
+          unzip -o artifact.zip -d deploy/production
+          ls -la deploy/production
